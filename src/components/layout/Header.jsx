@@ -1,5 +1,4 @@
 import './styles/header.css'
-import logo from '../../assets/logo3.png'
 
 export default function Header({ left, right }) {
     return (

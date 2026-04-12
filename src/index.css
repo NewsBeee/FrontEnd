@@ -20,13 +20,24 @@ html, body {
 .app-wrapper {
   width: 100%;
   max-width: 375px; /* 430px */
-  min-height: 100vh;
+  height: 100vh;
   margin: 0 auto;
-  overflow-y: auto;
   background-color: #FDFBF7;
-  padding-bottom: 74px; /* 네비게이션 높이만큼 패딩 추가 */
-  /* box-sizing: border-box; 내비게이션 뒤로 가려질 때 */
+  box-sizing: border-box; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.main-content::-webkit-scrollbar {
+  display: none;
+}
+
 
 /* :root {
   --text: #6b6375;

@@ -7,9 +7,11 @@ export default function Onboarding() {
         <>
             <Header left={<BackButton />} />
             <StepIndicator currentStep={3} />
-            <div className="onboarding-wrapper">
-                <h1>온보딩 페이지</h1>
-            </div>
+            <main className="main-content">
+                <div className="onboarding-wrapper">
+                    <h1>온보딩 페이지</h1>
+                </div>
+            </main>
         </>
         
     )

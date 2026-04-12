@@ -30,31 +30,34 @@ export default function Login() {
     return (
         <>
             <Header left={<BackButton />} />
-            <div className='login-wrapper'>
-                <div className='login-welcome'>반가워요!<br />뉴스비와 함께 공부해요!</div>
-                <div className='login-content'>
-                    <form className="login-form" id="loginForm" onSubmit={handleSubmit}>
-                        <div className='form-input'>
-                            <label>이메일</label>
-                            <input
-                                type="text"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div className='form-input'>
-                            <label>비밀번호</label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                    </form>
+            <main className='main-content'>
+                <div className='login-wrapper'>
+                    <div className='login-welcome'>반가워요!<br />뉴스비와 함께 공부해요!</div>
+                    <div className='login-content'>
+                        <form className="login-form" id="loginForm" onSubmit={handleSubmit}>
+                            <div className='form-input'>
+                                <label>이메일</label>
+                                <input
+                                    type="text"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+                            <div className='form-input'>
+                                <label>비밀번호</label>
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <button type="submit" className='login-btn' form='loginForm'>로그인</button>
                 </div>
-                
-                <button type="submit" className='login-btn' form='loginForm'>로그인</button>
-            </div>
+            </main>
+            
         </>
     )
 }

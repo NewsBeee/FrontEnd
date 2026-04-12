@@ -1,0 +1,78 @@
+.list-modal {   
+    position: fixed;
+    top: 56px;        /* 헤더 높이만큼 */
+    bottom: 74px;     /* 네비게이션 높이만큼 */
+    margin: 0 auto;
+    width: 100%;
+    max-width: 375px; /* 전체 높이에서 헤더와 네비게이션 높이를 뺀 값 */
+    background-color: #FDFBF7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-content {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 80%;
+    padding: 10px;
+}
+
+.list-content p {
+    display: flex;
+    justify-content: flex-end;
+    color: #727272;
+    font-size: 13px;
+    user-select: none;
+}
+
+.list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+    border-radius: 8px;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.list-item {
+    width: 100%;
+    min-width: 0;
+    border-bottom: 1px solid #c9c9c9;
+}
+
+.list-item a {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 15px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 3px 0;
+}
+
+.list-item a:hover {
+    color: var(--main-g);
+    border-bottom: 1px solid var(--main-g);
+}
+
+/* .list-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+    background-color: #d9d9d9;
+    border-radius: 4px;
+}
+
+.list-container::-webkit-scrollbar-track {
+    background-color: transparent;
+} */
+
+.list-container::-webkit-scrollbar {
+    display: none;
+}
