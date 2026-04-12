@@ -1,0 +1,17 @@
+.step-wrapper {
+    display: flex;
+    gap: 4px;
+    width: 89%;
+    margin: 10px auto;
+}
+
+.step {
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+    background-color: #C9C9C9;
+}
+
+.active {
+    background-color: #384B3A;
+}
