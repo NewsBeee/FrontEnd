@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp'
 import Nickname from './pages/Nickname'
 import Onboarding from './pages/Onboarding'
 import ChalQuiz from './pages/ChalQuiz'
+import Quiz from './pages/Quiz'
 // import './App.css'
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/signup/nickname" element={<Nickname />} />
             <Route path="/signup/onboarding" element={<Onboarding />} />
             <Route path="/promotion" element={<ChalQuiz />}/>
+            <Route path='/quiz' element={<Quiz />} />
           </Routes>
         </BrowserRouter>
       </div>
