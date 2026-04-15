@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import BackButton from "../components/common/BackButton";
 import StepIndicator from "../components/common/StepIndicator";
 import Header from "../components/layout/Header";
@@ -23,10 +23,30 @@ export default function Quiz() {
             ]
         }
     ]
-    const cq = quizData[1];
 
-    const [selected, setSelected] = useState(null);
     const { type } = useParams();
+    const navigate = useNavigate();
+    const [selected, setSelected] = useState(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const cq = quizData[currentIndex];
+
+    const isLastQuestion = currentIndex === quizData.length - 1;
+
+    const handleNext = () => {
+        if (!selected) return;
+
+        if (!isLastQuestion) {
+            setCurrentIndex(prev => prev + 1);
+            setSelected(null);
+        } else {
+            navigate(`/splash/${type}`);
+        }
+    }
+
+    if (currentIndex >= quizData.length) {
+        return <div>퀴즈 끝</div>;
+    }
 
     return (
         <>
@@ -36,7 +56,9 @@ export default function Quiz() {
             <main className="main-content">
                 <div className="quiz-wrapper">
                     <div className="quiz-container">
-                        <div className="quiz-number">(1/10)</div>
+                        <div className="quiz-number">
+                            ({currentIndex + 1}/{quizData.length})
+                        </div>
                         <div className="quiz-theme">
                             {cq.questionType === "meaning" ? "뜻 고르기" : "빈칸 채우기"}
                         </div>
@@ -59,6 +81,9 @@ export default function Quiz() {
                             </button>
                         ))}
                     </div>
+                    <button className="next-btn" onClick={handleNext}>
+                        {isLastQuestion ? "완료" : "다음"}
+                    </button>
                 </div>
             </main>
         </>

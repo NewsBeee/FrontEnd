@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Header from "../layout/Header";
 import BackButton from "../common/BackButton";
 import StepIndicator from "../common/StepIndicator"
@@ -5,6 +6,8 @@ import Img from "../../assets/image2.png"
 import './styles/quiz-intro.css'
 
 export default function QuizIntro({ type }) {
+    const navigate = useNavigate();
+
     return (
         <>
             <Header left={<BackButton />} />
@@ -24,7 +27,10 @@ export default function QuizIntro({ type }) {
                     <div className="quiz-img">
                         <img src={Img} />
                     </div>
-                    <button className="quizintro-btn">퀴즈 풀기</button>
+                    {type === "onboarding" ? 
+                        <button className="quizintro-btn" onClick={() => navigate('/quiz/onboarding')}>퀴즈 풀기</button>
+                        : <button className="quizintro-btn" onClick={() => navigate('/quiz/promotion')}>퀴즈 풀기</button>}
+                    
                 </div>
             </main>
         </>

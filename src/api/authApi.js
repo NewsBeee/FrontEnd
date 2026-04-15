@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5173';
 
 // 로그인
 export async function login(email, password) {
-    const res = await fetch(`${BASE_URL}/auth/login`, {
+    const res = await fetch(`${BASE_URL}/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export async function login(email, password) {
 
 // 로그아웃
 export async function logout() {
-    const res = await fetch(`${BASE_URL}/auth/logout`, {
+    const res = await fetch(`${BASE_URL}/`, {
         method: 'POST',
         credentials: 'include', // 쿠키 전송을 위해 필요
     });
@@ -27,7 +27,7 @@ export async function logout() {
 
 // 회원가입
 export async function signUp(email, password, nickname) {
-    const res = await fetch(`${BASE_URL}/auth/signup`, {
+    const res = await fetch(`${BASE_URL}/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
