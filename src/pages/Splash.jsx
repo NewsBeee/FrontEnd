@@ -15,9 +15,13 @@ export default function Splash() {
             if (type === "onboarding") {
                 navigate("/");
             } else {
-                navigate("/"); // `result/${type}` 퀴즈 결과 페이지
+                navigate("/promotion/result", {
+                    state: { result }
+                });
             }
         }, 2000);
+        
+        return () => clearTimeout(timer);
     }, []);
 
     return (
