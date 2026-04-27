@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { convertArticle } from '../api/articleApi'
 // import { useAuth } from '../hooks/useAuth'
 import Header from "../components/layout/Header"
@@ -14,9 +15,12 @@ const DUMMY_ARTICLES= [
   { id: 1, title: "영화 '프로젝트 헤일메리' 혼수 상태 우주여행 가능할까", link: 'https://www.dongascience.com/ko/news/76977' },
   { id: 2, title: '기사 제목 2', link: 'https://example.com/article2' },
   { id: 3, title: '기사 제목 3', link: 'https://example.com/article3' },
+  { id: 3, title: '기사 제목 3', link: 'https://example.com/article3' },
+  { id: 3, title: '기사 제목 3', link: 'https://example.com/article3' },
 ]
 
 export default function Home() {
+  const navigate = useNavigate();
   const [isListOpen, setIsListOpen] = useState(false)
   const [link, setLink] = useState('')
 
@@ -25,10 +29,22 @@ export default function Home() {
   const isLoggedIn = !!user
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    if (!link.trim()) return alert('링크를 입력해주세요!')
-    await convertArticle(link)
-    setLink('')
+    e.preventDefault();
+
+     if (!link.trim()) return alert('링크를 입력해주세요!')
+
+    try {
+      const result = await convertArticle(link);
+
+      navigate("/result", {
+        state: {article: result},
+      });
+
+      setLink('');
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
   }
 
   return (
@@ -65,7 +81,7 @@ export default function Home() {
             </form>
 
             <div className='recommend'>
-              <p>추천 기사</p>
+              <div className='recommend-name'>추천 기사</div>
               <div className='article-list'>
                 {DUMMY_ARTICLES.map(article => (
                   <div key={article.id} className='recommend-item'>

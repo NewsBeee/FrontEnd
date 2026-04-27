@@ -1,5 +1,3 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5173';
-
 // 로그인
 export async function login(email, password) {
     const res = await fetch(`${BASE_URL}/`, {
@@ -21,7 +19,7 @@ export async function login(email, password) {
 export async function logout() {
     const res = await fetch(`${BASE_URL}/`, {
         method: 'POST',
-        credentials: 'include', // 쿠키 전송을 위해 필요
+        credentials: 'include',
     });
 }
 

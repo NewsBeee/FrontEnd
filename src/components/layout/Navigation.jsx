@@ -12,7 +12,7 @@ export default function Navigation() {
 
     const navItems = [
         { name: '챌린지', icon: <RiMedalFill size={26} />, path: '/challenge' },
-        { name: '홈', icon: <FaHouse size={26} />, path: '/' },
+        { name: '홈', icon: <FaHouse size={26} />, path: '/', activePaths: ['/', '/result'] },
         { name: '마이페이지', icon: <FaUserLarge size={26} />, path: '/mypage' },
     ]
 
@@ -29,7 +29,7 @@ export default function Navigation() {
     
     return (
         <nav className="navigation">
-            <ul>
+            {/* <ul>
                 {navItems.map((item) => (
                     <li key={item.path} className={location.pathname === item.path ? 'active' : ''}>
                         <Link to={item.path} onClick={(e) => handleNavClick(e, item)}>
@@ -38,7 +38,22 @@ export default function Navigation() {
                         </Link>
                     </li>
                 ))}
-            </ul>
+            </ul> */}
+            <div className='nav-container'>
+                {navItems.map((item) => (
+                    <div key={item.path} className={
+                        item.activePaths
+                            ? item.activePaths.includes(location.pathname) ? 'active' : ''
+                            : location.pathname === item.path ? 'active' : ''
+                    }>
+                        <Link to={item.path} onClick={(e) => handleNavClick(e, item)}>
+                            {item.icon}
+                            <span>{item.name}</span>
+                        </Link>
+                    </div>
+                ))}
+            </div>
+                
         </nav>
     )
 }

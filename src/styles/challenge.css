@@ -1,0 +1,345 @@
+.chal-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 20px;
+    flex: 1;
+}
+
+/* 이번주 목표 */
+.chal-goal {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border: 1px solid #E4E0D8;
+    border-radius: 8px;
+    background-color: white;
+    /* width: 275px; */
+    height: auto;
+    padding: 20px;
+    box-shadow: 1px 4px 4px rgba(0, 0, 0, 0.15);
+}
+
+.chal-goal-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.text-header {
+    font-size: 20px;
+    font-weight: 550;
+    /*text-align: justify;*/
+}
+
+.text-sub {
+    font-size: 10px;
+    font-weight: 450;
+    color: #6B7D68;
+}
+
+.to-chal-setting {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 550;
+}
+
+.chal-goal-current {
+    width: 275px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #E4E0D8;
+    border-radius: 8px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 1px 4px 4px rgba(0, 0, 0, 0.15);
+    gap: 10px;
+}
+
+.goal-current {
+    display: flex;
+    justify-content: space-between;
+}
+
+.goal-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.goal-header {
+    font-size: 16px;
+    font-weight: 550;
+}
+
+.goal-sub {
+    font-size: 20px;
+    font-weight: 550;
+}
+
+.goal-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border: 3px solid var(--main-g);
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 550;
+}
+
+.goal-progress {
+    width: 100%;
+    height: 8px;
+    background-color: #D9D9D9;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.goal-progress-bar {
+    height: 100%;
+    background-color: var(--main-g);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+}
+
+.goal-description {
+    font-size: 10px;
+    font-weight: 450;
+    color: var(--sub-bg);
+}
+
+/* 이번주 읽기 기록*/
+.chal-tracker p {
+    font-size: 16px;
+    font-weight: 550;
+}
+
+.week-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.day-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.status-box {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    background-color: transparent;
+    border: 1px solid #F5F5F5;
+}
+
+/* 읽음 */
+.status-box.read {
+    background-color: #EBF0E8;
+    color: #6B7D68;
+}
+
+/* 안 읽음 */
+.status-box.unread {
+    background-color: #FFDEDE;
+    color: #F16D6D;
+}
+
+/* 당일 미완료 */
+.status-box.pending {
+    background-color: transparent;
+    border: 1px dashed #6B7D68;
+    color: #6B7D68;
+}
+
+.day-label {
+    font-size: 12px;
+    font-weight: 450;
+    color: var(--text);
+}
+
+.day-label.active-day {
+    font-weight: bold;
+}
+
+/* 달성 현황 */
+/*.chal-achievements {
+    
+}*/
+
+.chal-achievements p {
+    font-size: 16px;
+    font-weight: 550;
+}
+
+.achievements-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.achievement-week, .achievement-count, .achievement-level {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 31px;
+    border-radius: 8px;
+    gap: 10px;
+}
+
+.count {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.name {
+    font-size: 10px;
+    font-weight: 450;
+}
+
+.achievement-week {
+    background-color: var(--main-g);
+    color: var(--text-h);
+}
+
+.achievement-count {
+    background-color: var(--sub-bg);
+    color: var(--text-h);
+}
+
+.achievement-level {
+    background-color: var(--main-y);
+    color: var(--text);
+}
+
+/* 승급 퀴즈 도전 */
+.chal-record {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #E4E0D8;
+    border-radius: 8px;
+    background-color: white;
+    padding: 20px;
+    gap: 15px;
+    width: 275px;
+}
+
+.chal-record-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.record-name {
+    font-size: 16px;
+    font-weight: 550;
+}
+
+.record-description {
+    font-size: 12px;
+    font-weight: 450;
+    color: #6B7D68;
+}
+
+.stamp-list {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.stamp-img {
+    width: 64px;
+    height: 64px;
+}
+
+.stamp-slot {
+  /* width: 64px;
+  height: 64px;
+  border-radius: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; */
+
+  /*border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden; 
+    position: relative;
+    border: 1px solid transparent; */
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    box-sizing: border-box;
+}
+
+/* 도장이 찍히지 않은 상태*/
+.stamp-slot.empty {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px dashed var(--main-g);
+    background-color: transparent;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+/* 도장이 찍힌 상태*/
+.stamp-slot.active {
+    background-color: white;
+    border: 1px solid transparent;
+    animation: stamp-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 도장 찍힐 때 나타나는 효과 */
+@keyframes stamp-pop {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.chal-quiz-btn {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    border-radius: 8px;
+    background-color: #E4E0D8;
+    color: #6B7D68;
+    font-size: 12px;
+    font-weight: 550;
+}
+
+.chal-quiz-btn.active {
+    display: flex;
+    justify-content: center;
+    background-color: var(--main-y);
+    padding: 15px 0;
+    border-radius: 8px;
+}
+
+.chal-btn {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 550;
+}

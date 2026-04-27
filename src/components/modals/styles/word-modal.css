@@ -1,0 +1,100 @@
+.word-modal {   
+    position: fixed;
+    top: 56px;        /* 헤더 높이만큼 */
+    bottom: 74px;     /* 네비게이션 높이만큼 */
+    margin: 0 auto;
+    width: 100%;
+    max-width: 375px; /* 전체 높이에서 헤더와 네비게이션 높이를 뺀 값 */
+    background-color: #FDFBF7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.word-content {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 80%;
+    /* padding: 10px; */
+    gap: 40px;
+}
+
+.word-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.word-header-text {
+    font-size: 25px;
+    font-weight: 450;
+}
+
+.header-sub {
+    color: #727272;
+    font-size: 15px;
+    user-select: none;
+}
+
+.word-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13px;
+    border-radius: 8px;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: var(--main-bg);
+    width: 90%;
+    height: 298px;
+    max-height: 298px;
+}
+
+.word-container::-webkit-scrollbar {
+    display: none;
+}
+
+.word-item {
+    padding: 6px 12px;
+    border-radius: 8px;
+    background-color: #FDFBF7;
+    font-weight: 450;
+}
+
+.word-meaning {
+    padding: 6px 12px;
+    border-radius: 8px;
+    background-color: #FDFBF7;
+    width: 90%;
+    height: 298px;
+    max-height: 298px;
+    text-align: justify;
+}
+
+.word-btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.save-button {
+    padding: 13px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--main-g);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.cancel-button {
+    padding: 13px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #D9D9D9;
+    color: #727272;
+    font-weight: 500;
+    cursor: pointer;
+}
+

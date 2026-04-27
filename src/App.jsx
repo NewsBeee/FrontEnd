@@ -10,6 +10,9 @@ import ChalQuiz from './pages/ChalQuiz'
 import Quiz from './pages/Quiz'
 import Splash from './pages/Splash'
 import QuizResult from './pages/QuizResult'
+import Result from './pages/Result'
+import Challenge from './pages/Challenge'
+import ChalSetting from './pages/ChalSetting'
 // import './App.css'
 
 function App() {
@@ -31,6 +34,9 @@ function App() {
             <Route path="/quiz/:type" element={<Quiz />} />
             <Route path="/splash/:type" element={<Splash />} />
             <Route path="/promotion/result" element={<QuizResult />} />
+            <Route path="/result" element={<Result />} />
+            <Route path="/challenge" element={<Challenge />} />
+            <Route path="/challenge/setting" element={<ChalSetting />} />
           </Routes>
         </BrowserRouter>
       </div>
