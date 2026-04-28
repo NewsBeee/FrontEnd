@@ -29,8 +29,8 @@ export default function Result() {
         )
     }
 
-    function openWordModal(item) {
-        setSelectedWord(item);
+    function openWordModal(vcb) {
+        setSelectedWord(vcb);
         setIsModalOpen(true);
     }
 
@@ -76,14 +76,14 @@ export default function Result() {
                     <div className="result-content">
                         <span className="result-name">단어장</span>
                         <div className="result-voca">
-                            {voca.map((item, index) => (
-                                <div className="voca-item" key={`${item.word}-${index}`}>
-                                    <button className="voca-word" onClick={() => openWordModal(item)}>
-                                        {item.word}
+                            {voca.map((vcb, index) => (
+                                <div className="voca-item" key={`${vcb.word}-${index}`}>
+                                    <button className="voca-word" onClick={() => openWordModal(vcb)}>
+                                        {vcb.word}
                                     </button>
                                     <FaArrowRight />
-                                    <button className="voca-word" onClick={() => openWordModal(item)}>
-                                        {item.meaning}
+                                    <button className="voca-word" onClick={() => openWordModal(vcb)}>
+                                        {vcb.meaning}
                                     </button>
                                 </div>
                             ))}

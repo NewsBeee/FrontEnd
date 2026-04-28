@@ -20,8 +20,8 @@ export default function Navigation() {
     const user = DUMMY_USER
     const isLoggedIn = !!user
 
-    const handleNavClick = (e, item) => {
-        if (!isLoggedIn && item.path !== '/') {
+    const handleNavClick = (e, page) => {
+        if (!isLoggedIn && page.path !== '/') {
             e.preventDefault()
             navigate('/intro')
         }
@@ -40,18 +40,32 @@ export default function Navigation() {
                 ))}
             </ul> */}
             <div className='nav-container'>
-                {navItems.map((item) => (
-                    <div key={item.path} className={
-                        item.activePaths
-                            ? item.activePaths.includes(location.pathname) ? 'active' : ''
-                            : location.pathname === item.path ? 'active' : ''
+                {/* {navItems.map((page) => (
+                    <div key={page.path} className={
+                        page.activePaths
+                            ? page.activePaths.includes(location.pathname) ? 'active' : ''
+                            : location.pathname === page.path ? 'active' : ''
                     }>
-                        <Link to={item.path} onClick={(e) => handleNavClick(e, item)}>
-                            {item.icon}
-                            <span>{item.name}</span>
+                        <Link to={page.path} onClick={(e) => handleNavClick(e, page)}>
+                            {page.icon}
+                            <span>{page.name}</span>
                         </Link>
                     </div>
-                ))}
+                ))} */}
+                {navItems.map((page) => {
+                    const isActive = page.activePaths
+                        ? page.activePaths.includes(location.pathname)
+                        : location.pathname === page.path;
+
+                    return (
+                        <div key={page.path} className={isActive ? 'active' : ''}>
+                            <Link to={page.path} onClick={(e) => handleNavClick(e, page)}>
+                                {page.icon}
+                                <span>{page.name}</span>
+                            </Link>
+                        </div>
+                    );
+                })}
             </div>
                 
         </nav>

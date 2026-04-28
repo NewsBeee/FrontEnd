@@ -95,15 +95,15 @@ export default function ChalSetting() {
 
                             {open && (
                                 <ul className="dropdown-menu">
-                                    {categories.map((item) => (
+                                    {categories.map((opt) => (
                                         <li
-                                            key={item.value}
+                                            key={opt.value}
                                             onClick={() => {
-                                                setSelected(item);
+                                                setSelected(opt);
                                                 setOpen(false);
                                             }}
                                         >
-                                            {item.label}
+                                            {opt.label}
                                         </li>
                                     ))}
                                 </ul>
