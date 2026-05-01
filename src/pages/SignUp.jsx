@@ -5,8 +5,6 @@ import BackButton from '../components/common/BackButton'
 import StepIndicator from '../components/common/StepIndicator'
 import '../styles/signup.css'
 
-import { signUp } from '../api/authApi';
-
 export default function SignUp() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
@@ -15,23 +13,24 @@ export default function SignUp() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        // try {
-        //     const data = await signUp(email, password)
-        //     navigate('/signup/nickname'); // 닉네임은 빈 문자열로 전달
-        // } catch (error) {
-        //     alert('이메일 또는 비밀번호가 올바르지 않습니다.');
-        // }
-        // if (!email || !password || !confirmPassword) {
-        //     alert('모든 필드를 입력해주세요.');
-        //     return;
-        // }
+        
+        if (!email || !password || !confirmPassword) {
+            alert('모든 필드를 입력해주세요.');
+            return;
+        }
 
-        // if (password !== confirmPassword) {
-        //     alert('비밀번호가 일치하지 않습니다.');
-        //     return;
-        // }
+        if (password !== confirmPassword) {
+            alert('비밀번호가 일치하지 않습니다.');
+            return;
+        }
 
-        navigate('/signup/nickname');
+        try {
+            navigate('/signup/nickname', { 
+                state: { email, password }
+            });
+        } catch (error) {
+            alert('이메일 또는 비밀번호가 올바르지 않습니다.');
+        }
     }
 
     return (
