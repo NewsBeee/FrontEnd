@@ -1,10 +1,13 @@
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 // 로그인
 export async function login(email, password) {
-    const res = await fetch(`${BASE_URL}/`, {
+    const res = await fetch(`${BASE_URL}/newsbee/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
     });
 
@@ -17,7 +20,7 @@ export async function login(email, password) {
 
 // 로그아웃
 export async function logout() {
-    const res = await fetch(`${BASE_URL}/`, {
+    const res = await fetch(`${BASE_URL}/newsbee/auth/logout`, {
         method: 'POST',
         credentials: 'include',
     });
@@ -25,8 +28,9 @@ export async function logout() {
 
 // 회원가입
 export async function signUp(email, password, nickname) {
-    const res = await fetch(`${BASE_URL}/`, {
+    const res = await fetch(`${BASE_URL}/newsbee/auth/signup`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -40,5 +44,10 @@ export async function signUp(email, password, nickname) {
     return res.json();
 }
 
-// 회원가입-닉네임
-
+// 회원 탈퇴
+export async function deleteAccount() {
+    const res = await fetch(`${BASE_URL}/newsbee/auth/withdraw`, {
+        method: 'DELETE',
+        credentials: 'include',
+    })
+}

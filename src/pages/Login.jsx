@@ -5,26 +5,33 @@ import BackButton from '../components/common/BackButton'
 import '../styles/login.css'
 
 import { login } from '../api/authApi';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const { saveUser } = useAuth();
+
     async function handleSubmit(e) {
         e.preventDefault();
-        // try {
-        //     const data = await login(email, password)
-        //     navigate('/'); // 로그인 성공 시 홈으로 이동
-        // } catch (error) {
-        //     alert('이메일 또는 비밀번호가 올바르지 않습니다.');
 
-        // }
-        // if (!email || !password) {
-        //     alert('모든 필드를 입력해주세요.');
-        //     return;
-        // }
-        navigate('/home');
+        if (!email || !password) {
+            alert('모든 필드를 입력해주세요.');
+            return;
+        }
+
+        try {
+            const data = await login(email, password);
+
+            saveUser(data.result);
+
+            navigate('/'); 
+        } catch (error) {
+            alert('이메일 또는 비밀번호가 올바르지 않습니다.');
+
+        }
     }
 
     return (

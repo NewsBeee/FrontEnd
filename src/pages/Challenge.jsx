@@ -2,12 +2,13 @@ import { Link } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa6";
 import { FiCheck } from "react-icons/fi";
 import { IoIosClose } from "react-icons/io";
-import { useChallenge } from "../hooks/useChallenge";
 import Header from "../components/layout/Header";
 import Navigation from "../components/layout/Navigation"
 import logo from "../assets/logo3.png";
 import stampImage from "../assets/stamp2.png";
 import "../styles/challenge.css";
+
+import { useChallenge } from "../hooks/useChallenge";
 
 export default function Challenge() {
     const {

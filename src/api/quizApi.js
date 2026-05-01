@@ -1,6 +1,8 @@
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 // 온보딩 문항 조회
 export const fetchOnboarding = async () => {
-    const res = await fetch(`/newsbee/onboarding/questions`, {
+    const res = await fetch(`${BASE_URL}/newsbee/onboarding/questions`, {
         credentials: "include",
     });
 
@@ -16,7 +18,7 @@ export const fetchOnboarding = async () => {
 
 // 온보딩 답안 제출
 export const submitOnboarding = async (answers) => {
-    const res = await fetch(`/newsbee/onboarding/submit`, {
+    const res = await fetch(`${BASE_URL}/newsbee/onboarding/submit`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -36,7 +38,7 @@ export const submitOnboarding = async (answers) => {
 
 // 승급 퀴즈 문항 조회
 export const fetchPromotion = async () => {
-    const res = await fetch(`/newsbee/quizzes/promotion/questions`, {
+    const res = await fetch(`${BASE_URL}/newsbee/quizzes/promotion/questions`, {
         credentials: "include",
     });
 
@@ -52,7 +54,7 @@ export const fetchPromotion = async () => {
 
 // 승급 퀴즈 답안 제출
 export const submitPromotion = async (answers) => {
-    const res = await fetch(`/newsbee/quizzes/promotion/submit`, {
+    const res = await fetch(`${BASE_URL}/newsbee/quizzes/promotion/submit`, {
         method: "POST",
         credentials: "include",
         headers: {

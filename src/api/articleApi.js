@@ -1,8 +1,8 @@
-// const API_BASE = import.meta.env.VITE_API_BASE;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // 기사 변환
 export async function convertArticle(link) {
-    const res = await fetch(`${API_BASE}/newsbee/articles/transform`, {
+    const res = await fetch(`${BASE_URL}/newsbee/articles/transform`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

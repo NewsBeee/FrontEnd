@@ -1,6 +1,8 @@
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 // 현재 주간 목표 조회
 export async function getCurrentChallenge() {
-    const res = await fetch('/newsbee/challenges/current');
+    const res = await fetch(`${BASE_URL}/newsbee/challenges/current`);
 
     if (!res.ok) {
         throw new Error("현재 주간 목표 조회 실패");
@@ -26,7 +28,7 @@ export async function getCurrentChallenge() {
 export async function getChallengeProgress(weekStart) { 
     const params = new URLSearchParams({weekStart});
 
-    const res = await fetch(`/newsbee/challenges/progress?${params}`); 
+    const res = await fetch(`${BASE_URL}/newsbee/challenges/progress?${params}`); 
 
     if (!res.ok) {
         throw new Error("주간 학습 진행 현황 조회 실패"); 
@@ -59,7 +61,7 @@ export async function getChallengeProgress(weekStart) {
 
 // 주간 챌린지 달성 이력 조회
 export async function getChallengeHistory() {
-    const res = await fetch('/newsbee/challenges/history');
+    const res = await fetch(`${BASE_URL}/newsbee/challenges/history`);
 
     if (!res.ok) {
         throw new Error("주간 챌린지 달성 이력 조회 실패");
@@ -83,7 +85,7 @@ export async function getChallengeHistory() {
 
 // 주간 목표 설정
 export async function setChallenge({ weekStart, category, goal }) {
-    const res = await fetch('/newsbee/challenges', {
+    const res = await fetch(`${BASE_URL}/newsbee/challenges`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
