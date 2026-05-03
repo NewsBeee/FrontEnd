@@ -14,7 +14,10 @@ import Result from './pages/Result'
 import Challenge from './pages/Challenge'
 import ChalSetting from './pages/ChalSetting'
 import MyPage from './pages/MyPage'
+import Withdraw from './pages/Withdraw'
 import ProtectedRoute from './components/common/ProtectedRoute'
+import AccountDetail from './pages/AccountDetail'
+import Vocabulary from './pages/Vocabulary'
 // import './App.css'
 
 function App() {
@@ -45,7 +48,16 @@ function App() {
               } 
             />
             <Route path="/challenge/setting" element={<ChalSetting />} />
-            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/mypage" 
+              element={
+                <ProtectedRoute>
+                  <MyPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route path="/withdraw" element={<Withdraw />} />
+            <Route path="/account-detail" element={<AccountDetail />} />
+            <Route path="/vocabulary" element={<Vocabulary />} />
           </Routes>
         </BrowserRouter>
       </div>

@@ -7,7 +7,7 @@ export default function BackButton() {
 
     return (
         <button onClick={() => navigate(-1)} className="back-btn">
-            <GoChevronLeft size={25} />
+            <GoChevronLeft size={35} strokeWidth={1}/>
         </button>
     )
 }

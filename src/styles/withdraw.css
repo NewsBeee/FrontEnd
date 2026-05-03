@@ -1,0 +1,63 @@
+.left-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 450;
+    font-size: 20px;
+}
+
+.delete-content {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 70px);
+    box-sizing: border-box;
+    gap: 100px;
+}
+
+.delete-header {
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
+    font-weight: 550;
+    color: var(--text);
+    margin-top: 40px;
+}
+
+.delete-header span {
+    font-size: 12px;
+    font-weight: 450;
+    color: var(--sub-bg);
+}
+
+.delete-img {
+    display: flex;
+    justify-content: center;
+}
+
+.delete-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    margin: auto 0 15px;
+}
+
+.delete-btn, .cancel {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 550;
+}
+
+.delete-btn {
+    background-color: var(--main-g);
+    text-align: center;
+    color: var(--text-h);
+}
+
+.cancel {
+    background-color: #D9D9D9;
+    color: #727272;
+}
