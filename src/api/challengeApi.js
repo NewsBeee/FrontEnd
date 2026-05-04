@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
 
 // 현재 주간 목표 조회
 export async function getCurrentChallenge() {

@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
 
 // 기사 변환
 export async function convertArticle(link) {
@@ -17,4 +17,27 @@ export async function convertArticle(link) {
     return await res.json();
 }
 
+// 기사 읽기 기록 저장
+// export async function recordRead(articleId) {
+//     const res = await fetch(`${BASE_URL}/newsbee/articles/{articledId}/read`, {
+//         method: 'POST',
+//     })
+    
+    
+// }
+
 // 추천 기사
+export async function getRecommendation() {
+    const res = await fetch(`/newsbee/recommendations/articles`, {
+        method: 'GET',
+        credentials: 'include'
+    })
+
+    if (!res.ok) {
+        throw new Error('추천 기사 조회 실패');
+    }
+
+    const result = await res.json()
+
+    return result
+}
