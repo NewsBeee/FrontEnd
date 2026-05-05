@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from "../components/layout/Header"
 import logo from '../assets/logo3.png'
@@ -7,8 +7,9 @@ import Navigation from "../components/layout/Navigation"
 import ListModal from '../components/modals/ListModal'
 import '../styles/home.css'
 
-import { convertArticle } from '../api/articleApi'
+import { convertArticle, getRecommendation, recordRead } from '../api/articleApi'
 import { useAuth } from '../hooks/useAuth'
+import { useArticles } from '../hooks/useArticles'
 
 // 더미 데이터
 // const DUMMY_USER = {  name: '홍길동' }
@@ -19,14 +20,43 @@ const DUMMY_ARTICLES= [
 ]
 
 export default function Home() {
+  const [isListOpen, setIsListOpen] = useState(false);
+  const [link, setLink] = useState('');
+  const [recommendations, setRecommendations] = useState([]);
+
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [isListOpen, setIsListOpen] = useState(false)
-  const [link, setLink] = useState('')
+  const { list, loadMore, hasMore, loading, reset } = useArticles(); 
 
   // 임시  
   // const user = DUMMY_USER
   // const isLoggedIn = !!user
+
+  useEffect(() => {
+    async function fetchRecommendations() {
+      try {
+        const currentLevel = user?.level || 2;
+
+        const data = await getRecommendation(currentLevel);
+        setRecommendations(data);
+      } catch (err) {
+        console.error("추천 기사 로딩 실패:", err);
+      }
+    }
+
+    fetchRecommendations();
+  }, [user]);
+
+  async function openListModal() {
+    if (isListOpen) {
+      setIsListOpen(false);
+      return;
+    }
+    
+    reset();
+    setIsListOpen(true);
+    await loadMore();
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -45,15 +75,25 @@ export default function Home() {
     // }
 
     try {
-      const result = await convertArticle(link);
+      // 기사 변환 요청
+      const data = await convertArticle(link);
 
       // if (!user) {
       //   const count = Number(localStorage.getItem('guestConvertCount') || 0);
       //   localStorage.setItem('guestConvertCount', count + 1);
       // }
 
+      // 기사 읽기 기록 저장 요청
+      const articleId = data.result.articleId;
+
+      // if (user) {
+      //   await recordRead(articleId);
+      // } 
+
+      await recordRead(articleId);
+    
       navigate("/result", {
-        state: {article: result},
+        state: {article: data.result},
       });
 
       setLink('');
@@ -67,10 +107,17 @@ export default function Home() {
     <>
         <Header 
           left={<img src={logo} style={{ width: '121px' }}/>} 
-          right={<ListButton isOpen={isListOpen} onToggle={() => setIsListOpen(prev => !prev)} />}
+          right={<ListButton isOpen={isListOpen} onToggle={openListModal} />}
         />
 
-        <ListModal isOpen={isListOpen} onClose={() => setIsListOpen(false)} />
+        <ListModal 
+          isOpen={isListOpen} 
+          onClose={() => setIsListOpen(false)} 
+          articles={list}
+          loadMore={loadMore}
+          hasMore={hasMore}
+          loading={loading}
+         />
 
         <main className='main-content'>
           <div className="home-wrapper">
@@ -99,13 +146,17 @@ export default function Home() {
             <div className='recommend'>
               <div className='recommend-name'>추천 기사</div>
               <div className='article-list'>
-                {DUMMY_ARTICLES.map(article => (
-                  <div key={article.id} className='recommend-item'>
-                    <a href={article.link} target="_blank" rel="noopener noreferrer">
-                      {article.title}
-                    </a>
-                  </div>
-                ))}
+                {recommendations.length > 0 ? (
+                  recommendations.map((article, index) => (
+                    <div key={index} className='recommend-item'>
+                      <a href={article.link} target="_blank" rel="noopener noreferrer">
+                        {article.title}
+                      </a>
+                    </div>
+                  ))
+                ) : (
+                  <div className='recommend-item'>로그인 후 이용할 수 있습니다.</div>
+                )}
               </div>
             </div>
           </div>
