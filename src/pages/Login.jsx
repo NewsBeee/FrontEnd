@@ -23,7 +23,7 @@ export default function Login() {
         }
 
         try {
-            const data = await login(email, password);
+            const data = await login({ email, password });
 
             saveUser(data.result);
 
