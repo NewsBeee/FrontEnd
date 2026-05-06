@@ -8,11 +8,15 @@ export async function convertArticle(link) {
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ link }),
     });
     
     if (!res.ok) {
-        throw new Error('기사 변환 실패');
+        const error = new Error(data.message || '기사 변환 실패');
+        error.status = res.status;
+        error.data = data;
+        throw error;
     }
 
     return await res.json();
@@ -32,22 +36,38 @@ export async function recordRead(articleId) {
     return await res.json();
 }
 
+// const DUMMY_RECOMMEND = [
+//     {
+//         title: "기사 제목1",
+//         link: "123456"
+//     },
+//     {
+//         title: "기사 제목2",
+//         link: "102938475"
+//     },
+//     {
+//         title: "기사 제목3",
+//         link: "12345"
+//     },
+// ]
 // 추천 기사
-export async function getRecommendation(level) {
+export async function getRecommendation(level) {    
     const queryPath = level ? `?level=${level}` : '';
-    
-    const res = await fetch(`${BASE_URL}/newsbee/recommendations/articles`, {
+
+    const res = await fetch(`${BASE_URL}/newsbee/recommendations/articles${queryPath}`, {
         method: 'GET',
-        credentials: 'include'
+        credentials: 'include',
     })
 
     if (!res.ok) {
         throw new Error('추천 기사 조회 실패');
     }
 
-    const result = await res.json()
+    const data = await res.json()
 
-    return result.articles;
+    return data.result.articles;
+
+    // return DUMMY_RECOMMEND;
 }
 
 // const DUMMY_ARTICLES = [
@@ -210,5 +230,14 @@ export async function getArticles(page = 0, size = 16) {
 export async function getQuota() {
     const res = await fetch(`${BASE_URL}/newsbee/articles/guest/quota`, {
         method: 'GET',
-    })
+        credentials: 'include'
+    });
+
+    if (!res.ok) {
+        throw new Error('비회원 잔여 횟수 조회 오류');
+    }
+
+    const data = await res.json();
+
+    return data.result;
 }

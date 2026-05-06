@@ -1,11 +1,12 @@
-import { use, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useOnboarding } from "../hooks/useOnboarding";
-import { usePromotion } from "../hooks/usePromotion";
-import BackButton from "../components/common/BackButton";
 import StepIndicator from "../components/common/StepIndicator";
 import Header from "../components/layout/Header";
+import Logo from '../assets/logo3.png'
 import "../styles/quiz.css";
+
+import { useOnboarding } from "../hooks/useOnboarding";
+import { usePromotion } from "../hooks/usePromotion";
 
 export default function Quiz() {
     // 임시
@@ -28,17 +29,20 @@ export default function Quiz() {
 
     const { type } = useParams();
     const navigate = useNavigate();
-    const [selected, setSelected] = useState(null);
 
-    const quizHook = type === "onboarding" ? useOnboarding() : usePromotion();
+    const obHook = useOnboarding();
+    const pmHook = usePromotion();
+
+    const quizHook = type === "onboarding" ? obHook : pmHook;
+
     const {
         loading,
+        error,
         currentQuestion,
         currentIndex,
-        total,
+        selectedChoiceId,
         selectAnswer,
-        nextQuestion,
-        submitQuiz,
+        submitAnswer,
         result
     } = quizHook;
 
@@ -74,34 +78,36 @@ export default function Quiz() {
         
         if (type === "onboarding") {
             navigate("/splash/onboarding", {
-                state: { type: "onboarding"}
+                state: { type: "onboarding", result }
             });
         }
-    }, [result, type]);
+    }, [result, type, navigate]);
 
     if (loading) return <div>로딩 중...</div>;
+    if (error) return <div>퀴즈를 불러오지 못했습니다.</div>;
+    if (!currentQuestion) return <div>문제가 없습니다.</div>;
 
     return (
         <>
-            <Header left={<BackButton />} />
+            <Header left={<img src={Logo} style={{ width: '121px' }}/>} />
             {type === "onboarding" && <StepIndicator currentStep={3} />}
 
             <main className="main-content">
                 <div className="quiz-wrapper">
                     <div className="quiz-container">
                         <div className="quiz-number">
-                            ({currentIndex + 1}/{total})
+                            {currentIndex + 1}/10
                         </div>
                         <div className="quiz-theme">
-                            {currentQuestion?.questionText?.includes("빈칸")
+                            {currentQuestion.questionText?.includes("빈칸")
                                 ? "빈칸 채우기"
-                                : currentQuestion?.questionText?.includes("뜻")
+                                : currentQuestion.questionText?.includes("뜻")
                                 ? "뜻 고르기"
                                 : ""
                             }
                         </div>
                         <div className="quiz-question">
-                            {currentQuestion?.questionText}
+                            {currentQuestion.questionText}
                         </div>
                     </div>
                     
@@ -109,24 +115,27 @@ export default function Quiz() {
                         {cq.example}
                     </div> */}
                     <div className="quiz-answer">
-                        {currentQuestion?.choices.map(choice => (
+                        {currentQuestion.choices?.map(choice => (
                             <button 
                                 key={choice.choiceId}
                                 className={selected === choice.choiceId ? "active" : ""}
                                 onClick={() => {
-                                    setSelected(choice.choiceId);
-                                    selectAnswer(currentQuestion.questionId, choice.choiceId);
+                                    selectAnswer(choice.choiceId);
                                 }}
                             >
                                 {choice.choiceText}
                             </button>
                         ))}
                     </div>
-                    {currentIndex < total - 1 ? (
-                        <button className="next-btn" onClick={nextQuestion}>다음</button>
-                    ) : (
-                        <button className="next-btn" onClick={submitQuiz}>완료</button>
-                    )}
+                    
+                    <button 
+                        className="next-btn" 
+                        onClick={submitAnswer}
+                        disabled={selectedChoiceId === null}
+                    >
+                        다음
+                    </button>
+                   
                 </div>
             </main>
         </>

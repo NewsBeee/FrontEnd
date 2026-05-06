@@ -1,21 +1,26 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchPromotion, submitPromotion } from "../api/quizApi";
 
 export function usePromotion() {
-    const [questions, setQuestions] = useState([]);
+    const [sessionId, setSessionId] = useState(null);
+    const [currentQuestion, setCurrentQuestion] = useState(null);
+    const [selectedChoiceId, setSelectedChoiceId] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [answers, setAnswers] = useState([]);
+    const [result, setResult] = useState(null);
 
     const [loading, setLoading] = useState(true);
-    const [result, setResult] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const loadPromotion = async () => {
             try {
                 const data = await fetchPromotion();
-                setQuestions(data);
+
+                setSessionId(data.sessionId);
+                setCurrentQuestion(data.question);
             } catch (err) {
                 console.error(err);
+                setError(err);
             } finally {
                 setLoading(false);
             }
@@ -23,36 +28,48 @@ export function usePromotion() {
         loadPromotion();
     }, []);
 
-    const currentQuestion = questions[currentIndex];
-
-    const selectAnswer = (questionId, choiceId) => {
-        setAnswers((prev) => {
-            const filtered = prev.filter((a) => a.questionId !== questionId);
-            return [...filtered, { questionId, choiceId }];
-        })
+    const selectAnswer = (choiceId) => {
+        setSelectedChoiceId(choiceId);
     };
 
-    const nextQuestion = () => {
-        setCurrentIndex((prev) => prev + 1);
-    }
+    const submitAnswer = async () => {
+        if (selectedChoiceId === null) {
+            alert("답안을 선택해주세요.");
+            return;
+        }
 
-    const submitQuiz = async () => {
         try {
-            const res = await submitPromotion(answers);
-            setResult(res);
+            const res = await submitPromotion({
+                sessiondId,
+                choiceId: selectedChoiceId
+            });
+            
+            if (res.completed) {
+                setResult(res);
+                return;
+            }
+
+            const nextQuestion = await fetchPromotion();
+
+            setSessionId(nextQuestion.sessionId);
+            setCurrentQuestion(nextQuestion.question);
+            setSelectedChoiceId(null);
+            setCurrentIndex((prev) => prev + 1);
         } catch (err) {
             console.error(err);
+            setError(err);
         }
     };
 
     return {
         loading,
+        error,
+        sessionId,
         currentQuestion,
         currentIndex,
-        total: questions.length,
+        selectedChoiceId,
         selectAnswer,
-        nextQuestion,
-        submitQuiz,
+        submitAnswer,
         result
     } 
 }

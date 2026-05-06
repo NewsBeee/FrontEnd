@@ -43,7 +43,7 @@ function App() {
             <Route path="/challenge" 
               element={
                 <ProtectedRoute>
-                      <Challenge />
+                  <Challenge />
                 </ProtectedRoute>
               } 
             />
