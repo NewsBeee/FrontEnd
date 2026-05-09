@@ -60,7 +60,7 @@ export default function Home() {
 
   async function openListModal() {
     if (!user) {
-      alert('로그인 후 목록을 확인할 수 있습니다.')
+      showToast("로그인 후 목록을 확인할 수 있습니다", "error");
       return;
     }
 
@@ -104,7 +104,7 @@ export default function Home() {
 
       // 비회원 사용 횟수 초과
       if (err.status === 403 && err.data?.code === "ARTICLE_403") {
-        alert("비로그인 사용자는 최대 5회까지 변환할 수 있습니다.");
+        showToast("비로그인 사용자는 최대 5회까지 변환할 수 있습니다", "error");
         navigate("/intro");
         return;
       }
