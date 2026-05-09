@@ -10,6 +10,7 @@ import '../styles/home.css'
 import { convertArticle, getQuota, getRecommendation, recordRead } from '../api/articleApi'
 import { useAuth } from '../hooks/useAuth'
 import { useArticles } from '../hooks/useArticles'
+import { useToast } from '../hooks/useToast'
 
 export default function Home() {
   const [isListOpen, setIsListOpen] = useState(false);
@@ -20,6 +21,7 @@ export default function Home() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { list, loadMore, hasMore, loading, reset } = useArticles(); 
+  const { showToast } = useToast();
 
   // 추천 기사
   useEffect(() => {
@@ -75,7 +77,10 @@ export default function Home() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!link.trim()) return alert('링크를 입력해주세요!');
+    if (!link.trim()) {
+      showToast("링크를 입력해주세요", "error");
+      return;
+    }
 
     try {
       // 기사 변환 요청
