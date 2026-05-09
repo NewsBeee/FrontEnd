@@ -17,7 +17,7 @@ export default function AccountDetail() {
         }
 
         try {
-            await updateAccount(ninckname)
+            await updateAccount(nickname)
 
             alert('닉네임이 변경되었습니다')
 

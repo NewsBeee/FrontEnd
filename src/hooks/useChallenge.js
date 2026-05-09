@@ -66,6 +66,12 @@ export function useChallenge() {
 
                 setChallenge(challenge);
 
+                if (!challenge?.challengeId || !challenge?.weekStart) {
+                    const history = await getChallengeHistory();
+                    setHistory(history);
+                    return
+                }
+
                 const progress = await getChallengeProgress(challenge.weekStart);
 
                 setProgress(progress);
