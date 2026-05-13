@@ -17,6 +17,7 @@ export default function Home() {
   const [link, setLink] = useState('');
   const [recommendations, setRecommendations] = useState([]);
   const [guestCount, setGuestCount] = useState(null);
+  const [summaryCount, setSummaryCount] = useState(5);
 
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -74,6 +75,7 @@ export default function Home() {
     await loadMore();
   }
 
+  // 기사 변환 
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -83,11 +85,13 @@ export default function Home() {
     }
 
     try {
-      // 기사 변환 요청
-      const data = await convertArticle(link);
+      const data = await convertArticle({
+        link,
+        summary_count: summaryCount,
+      });
 
       const article = data.result;
-      const articeId = article.articleId;
+      const articleId = article.articleId;
 
       // 기사 읽기 기록 저장 요청
       if (user) {
@@ -148,6 +152,13 @@ export default function Home() {
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
               />
+              <div className='summary-options'>
+                <span>기사 요약</span>
+                {[5, 10, 15].map((line) => (
+                  <button key={line} type='button' className={summaryCount === line ? "active" : ""}
+                  onClick={() => setSummaryCount(line)}>{line}줄</button>
+                ))}
+              </div>
               <button className='convert' type="submit">
                 어휘 변환하기
               </button>

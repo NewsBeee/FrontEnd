@@ -49,6 +49,32 @@
     border: 1px solid var(--main-g);
 }
 
+.summary-options {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.summary-options span {
+    font-size: 13px;
+    color: #646464;
+}
+
+.summary-options button {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+    background: none;
+    color: #727272;
+}
+
+.summary-options button.active {
+    border-color: #d9bc5d;
+    background: var(--main-y);
+    color: var(--text);
+}
+
 .convert {
     padding: 12px;
     background-color: #384B3A;
@@ -64,6 +90,7 @@
     flex-direction: column;
     width: 84%;
     gap: 6px;
+    margin-bottom: 30px;
 }
 
 .recommend-name {
