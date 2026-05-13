@@ -6,6 +6,8 @@ import Header from "../components/layout/Header";
 import Navigation from "../components/layout/Navigation"
 import logo from "../assets/logo3.png";
 import stampImage from "../assets/stamp2.png";
+import Error from "../components/common/Error";
+import Loading from "../components/common/Loading";
 import "../styles/challenge.css";
 
 import { useChallenge } from "../hooks/useChallenge";
@@ -26,8 +28,8 @@ export default function Challenge() {
         error
      } = useChallenge();
 
-    if (loading) return <div>로딩중...</div>;
-    if (error) return <div>에러 발생</div>;
+    if (loading) return <Loading />;
+    if (error) return <Error />;
 
     const percent = goal > 0 ? Math.min((completed / goal) * 100, 100) : 0;
 

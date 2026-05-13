@@ -1,15 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiList } from "react-icons/fi";
-import { setChallenge } from "../api/challengeApi";
-import { getKSTDate } from "../utils/date";
 import Header from "../components/layout/Header";
 import BackButton from "../components/common/BackButton";
 import "../styles/chal-setting.css";
 
+import { setChallenge } from "../api/challengeApi";
+import { getKSTDate } from "../utils/date";
+import { useToast } from '../hooks/useToast'
+
 export default function ChalSetting() {
     const navigate = useNavigate();
     const sliderRef = useRef(null);
+    const { showToast } = useToast();
 
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState(null);
@@ -41,7 +44,7 @@ export default function ChalSetting() {
 
     async function handleSave() {
         if (!selected) {
-            alert("카테고리를 선택해주세요");
+            showToast("카테고리를 선택해주세요", "error");
             return;
         }
 
@@ -55,7 +58,7 @@ export default function ChalSetting() {
             navigate("/challenge");
         } catch (err) {
             console.error(err);
-            alert("저장 실패");
+            showToast("오류가 발생했습니다. 다시 시도해주세요.", "fail");
         }
     }
 

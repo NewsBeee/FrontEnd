@@ -3,7 +3,10 @@ const BASE_URL = "http://localhost:8080";
 
 // 현재 주간 목표 조회
 export async function getCurrentChallenge() {
-    const res = await fetch(`${BASE_URL}/newsbee/challenges/current`);
+    const res = await fetch(`${BASE_URL}/newsbee/challenges/current`, {
+        method: 'GET',
+        credentials: 'include',
+    });
 
     if (!res.ok) {
         throw new Error("현재 주간 목표 조회 실패");
@@ -16,20 +19,16 @@ export async function getCurrentChallenge() {
     }
 
     return result;
-
-    // return {
-    //     challengeId: 12,
-    //     weekStart: "2026-04-30",
-    //     category: "경제",
-    //     goal: 4
-    // };
 }
 
 // 주간 학습 진행 현황 조회
 export async function getChallengeProgress(weekStart) { 
     const params = new URLSearchParams({weekStart});
 
-    const res = await fetch(`${BASE_URL}/newsbee/challenges/progress?${params}`); 
+    const res = await fetch(`${BASE_URL}/newsbee/challenges/progress?${params}`, {
+        method: 'GET',
+        credentials: 'include',
+    }); 
 
     if (!res.ok) {
         throw new Error("주간 학습 진행 현황 조회 실패"); 
@@ -42,27 +41,14 @@ export async function getChallengeProgress(weekStart) {
     }
 
     return result; 
-
-    // 테스트
-    // return {
-    //     targetArticleCount: 4,
-    //     completedArticleCount: 3,
-    //     dailyStatus: {
-    //         sun: false,
-    //         mon: true,
-    //         tue: true,
-    //         wed: false,
-    //         thu: true,
-    //         fri: false,
-    //         sat: false
-    //     },
-    //     promotionQuizAvailable: false
-    // };
 }
 
 // 주간 챌린지 달성 이력 조회
 export async function getChallengeHistory() {
-    const res = await fetch(`${BASE_URL}/newsbee/challenges/history`);
+    const res = await fetch(`${BASE_URL}/newsbee/challenges/history`, {
+        method: 'GET',
+        credentials: 'include'
+    });
 
     if (!res.ok) {
         throw new Error("주간 챌린지 달성 이력 조회 실패");
@@ -75,19 +61,13 @@ export async function getChallengeHistory() {
     }
 
     return result;
-
-    // 테스트
-    // return {
-    //     completedWeekCount: 12,
-    //     readArticleCount: 48,
-    //     level: 2
-    // };
 }
 
 // 주간 목표 설정
 export async function setChallenge({ weekStart, category, goal }) {
     const res = await fetch(`${BASE_URL}/newsbee/challenges`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
         },

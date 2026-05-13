@@ -1,0 +1,22 @@
+.error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-top: 180px;
+}
+
+.error-page p {
+    font-size: 23px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.error-page button {
+    padding: 12px 20px;
+    background-color: #384B3A;
+    color: var(--text-h);
+    border-radius: 8px;
+    border: none;
+    margin-top: 10px;
+}

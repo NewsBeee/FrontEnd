@@ -6,13 +6,18 @@ import ListButton from "../components/common/ListButton";
 import Navigation from "../components/layout/Navigation";
 import ListModal from "../components/modals/ListModal"; 
 import WordModal from "../components/modals/WordModal";
+import Error from "../components/common/Error";
 import logo from "../assets/logo3.png";
 import '../styles/result.css';
+
 import { saveVoca } from "../api/wordApi";
+import { useToast } from '../hooks/useToast'
 
 export default function Result() {
     const location = useLocation();
     const navigate = useNavigate();
+    const { showToast } = useToast();
+    
     const [isListOpen, setIsListOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedWord, setSelectedWord] = useState(null);
@@ -20,14 +25,7 @@ export default function Result() {
     const article = location.state?.article;
     const voca = article?.vocabulary || [];
 
-    if (!article) {
-        return (
-            <div>
-                <p>변환된 기사가 없습니다.</p>
-                <button onClick={() => navigate("/")}>홈으로 돌아가기</button>
-            </div>
-        )
-    }
+    if (!article) return <Error />
 
     function openWordModal(vcb) {
         setSelectedWord(vcb);
@@ -42,11 +40,11 @@ export default function Result() {
                 meaning: selectedWord.meaning,
             });
 
-            alert('단어가 저장되었습니다');
+            showToast("단어가 저장되었습니다", "save");
             setIsModalOpen(false);
         } catch (err) {
             console.error(err);
-            alert(err.message);
+            showToast(err.message, "fail");
         }
     }
 

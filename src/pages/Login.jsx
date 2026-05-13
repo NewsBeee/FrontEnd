@@ -6,6 +6,7 @@ import '../styles/login.css'
 
 import { login } from '../api/authApi';
 import { useAuth } from '../hooks/useAuth';
+import { useToast } from '../hooks/useToast'
 
 export default function Login() {
     const navigate = useNavigate();
@@ -13,12 +14,13 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
     const { saveUser } = useAuth();
+    const { showToast } = useToast();
 
     async function handleSubmit(e) {
         e.preventDefault();
 
         if (!email || !password) {
-            alert('모든 필드를 입력해주세요.');
+            showToast("모든 필드를 입력해주세요", "fail");
             return;
         }
 
@@ -29,8 +31,8 @@ export default function Login() {
 
             navigate('/'); 
         } catch (error) {
-            alert('이메일 또는 비밀번호가 올바르지 않습니다.');
-
+            console.error(error);
+            showToast(error.message, "fail");
         }
     }
 
@@ -45,7 +47,7 @@ export default function Login() {
                             <div className='form-input'>
                                 <label>이메일</label>
                                 <input
-                                    type="text"
+                                    type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />

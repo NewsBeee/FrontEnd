@@ -12,7 +12,7 @@ export function ToastProvider({ children }) {
 
         setTimeout(() => {
             setToast(null);
-        }, 2500);
+        }, 3000);
     }
 
     return (

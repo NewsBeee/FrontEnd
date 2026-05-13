@@ -11,12 +11,19 @@ export async function login({ email, password} ) {
         credentials: 'include',
         body: JSON.stringify({ email, password }),
     });
+    
+    const data = await res.json();
 
     if (!res.ok) {
-        throw new Error('로그인 오류');
-    }
+        const error = new Error(data.message || '로그인 오류');
 
-    return res.json();
+        error.status = res.status;
+        error.code = data.code;
+
+        throw error;
+    }
+    
+    return data;
 }
 
 // 로그아웃
@@ -26,11 +33,18 @@ export async function logout() {
         credentials: 'include'
     });
 
-    if (!res.ok) {
-        throw new Error('로그아웃 오류')
-    }
+    const data = await res.json();
 
-    return await res.json();
+    if (!res.ok) {
+        const error = new Error(data.message || '로그아웃 오류');
+
+        error.status = res.status;
+        error.code = data.code;
+
+        throw error;
+    }
+    
+    return data;
 }
 
 // 회원가입
@@ -44,11 +58,18 @@ export async function signUp({ email, password, nickname }) {
         body: JSON.stringify({ email, password, nickname }),
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-        throw new Error('회원가입 오류');
+        const error = new Error(data.message || '회원가입 오류');
+
+        error.status = res.status;
+        error.code = data.code;
+
+        throw error;
     }
     
-    return await res.json();
+    return data;
 }
 
 // 회원 탈퇴
@@ -58,11 +79,18 @@ export async function deleteAccount() {
         credentials: 'include',
     });
 
-    if (!res.ok) {
-        throw new Error('회원 탈퇴 오류')
-    }
+    const data = await res.json();
 
-    return await res.json();
+    if (!res.ok) {
+        const error = new Error(data.message || '회원탈퇴 오류');
+
+        error.status = res.status;
+        error.code = data.code;
+
+        throw error;
+    }
+    
+    return data;
 }
 
 // 사용자 정보 수정

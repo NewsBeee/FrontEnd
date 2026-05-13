@@ -7,11 +7,13 @@ import "../styles/withdraw.css"
 
 import { deleteAccount } from "../api/authApi";
 import { useAuth } from "../hooks/useAuth";
+import { useToast } from '../hooks/useToast'
 
 export default function Withdraw() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate(); 
     const { clearUser } = useAuth();
+    const { showToast } = useToast();
     
     async function handleDelete() {
         // if (!window.confirm('정말 계정을 삭제하시겠습니까?')) return;
@@ -23,11 +25,11 @@ export default function Withdraw() {
 
             clearUser();
 
-            alert('회원 탈퇴가 정상적으로 처리되었습니다.');
+            showToast('회원 탈퇴가 정상적으로 처리되었습니다.', 'success');
             navigate('/intro');
         } catch (error) {
             console.error(error);
-            alert('회원 탈퇴 처리 중 오류가 발생했습니다.');
+            showToast(error.message, 'fail');
         } finally {
             setLoading(false);
         }

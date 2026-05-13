@@ -5,32 +5,55 @@ import BackButton from '../components/common/BackButton'
 import StepIndicator from '../components/common/StepIndicator'
 import '../styles/signup.css'
 
+import { useToast } from '../hooks/useToast'
+
 export default function SignUp() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [pwError, setPwError] = useState(false);
+    const [errors, setErrors] = useState({});
+
+    const { showToast } = useToast();
+
+    const isFormEmpty = !email || !password || !confirmPassword;
 
     async function handleSubmit(e) {
         e.preventDefault();
+
+        const newErrors = {};
+
+        if (!email.trim()) {
+            newErrors.email = '이메일을 입력해주세요.';
+        }
+
+        if (!password.trim()) {
+            newErrors.password = '비밀번호를 입력해주세요.';
+        }
+
+        if (!confirmPassword.trim()) {
+            newErrors.confirmPassword = '비밀번호를 다시 입력해주세요.';
+        }
         
-        if (!email || !password || !confirmPassword) {
-            alert('모든 필드를 입력해주세요.');
+        setErrors(newErrors);
+
+        if (Object.keys(newErrors).length > 0) {
+            showToast("모든 필드를 입력해주세요.", "error");
             return;
         }
 
-        if (password !== confirmPassword) {
-            alert('비밀번호가 일치하지 않습니다.');
+         if (password !== confirmPassword) {
+            showToast("비밀번호를 확인해주세요.", "error");
+            setPwError(true);
             return;
         }
 
-        try {
-            navigate('/signup/nickname', { 
-                state: { email, password }
-            });
-        } catch (error) {
-            alert('이메일 또는 비밀번호가 올바르지 않습니다.');
-        }
+        setPwError(false);
+
+        navigate('/signup/nickname', { 
+            state: { email, password }
+        });
     }
 
     return (
@@ -45,33 +68,61 @@ export default function SignUp() {
                             <div className='form-input'>
                                 <label>이메일</label>
                                 <input 
-                                    type="text" 
+                                    type="email" 
                                     value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                        setErrors(prev => ({ ...prev, email: '' }));
+                                    }}
                                 />  
+                                {errors.email && <p className="error-message">{errors.email}</p>}
                             </div>
+
                             <div className='form-input'>
                                 <label>비밀번호</label>
                                 <input 
                                     type="password" 
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) => {
+                                        setPassword(e.target.value);
+                                        setErrors(prev => ({ ...prev, password: '' }));
+                                        setPwError(false);
+                                    }}
                                 />
+                                {
+                                    errors.password ? (
+                                        <p className='error-message'>{errors.password}</p>
+                                    ) : pwError ? (
+                                        <p className='error-message'>비밀번호가 일치하지 않습니다.</p>
+                                    ) : (
+                                        <p className='pw-info'>비밀번호는 영문, 숫자 조합 8~16자 이내로 입력해주세요.</p>
+                                    )
+                                }
                             </div>
+
                             <div className='form-input'>
                                 <label>비밀번호 재확인</label>
                                 <input 
                                     type="password"
                                     value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)} />
-                                <p>비밀번호는 영문, 숫자 조합 8~16자 이내로 입력해주세요.</p>
+                                    onChange={(e) => {
+                                        setConfirmPassword(e.target.value);
+                                        setErrors(prev => ({ ...prev, confirmPassword: '' }));
+                                        setPwError(false);
+                                    }}
+                                />
+                                {pwError ? (
+                                        <p className="error-message">비밀번호가 일치하지 않습니다.</p>
+                                ) : errors.confirmPassword ? (
+                                    <p className='error-message'>{errors.confirmPassword}</p>
+                                ) : null}
                             </div>
                         </form>
                     </div>
                     
                     <button 
                         type="submit" 
-                        className='signup-btn' 
+                        className={`signup-btn ${isFormEmpty ? 'disabled' : ''}`}
                         form='signupForm'
                     >
                         다음

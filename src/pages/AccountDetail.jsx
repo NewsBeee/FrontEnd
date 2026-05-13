@@ -5,26 +5,29 @@ import BackButton from "../components/common/BackButton"
 import "../styles/account-detail.css"
 
 import { updateAccount } from "../api/authApi"
+import { useToast } from '../hooks/useToast'
 
 export default function AccountDetail() {
     const [nickname, setNickname] = useState("");
-    const navigate = useNavigate()
+
+    const navigate = useNavigate();
+    const { showToast } = useToast();
 
     async function handleSubmit() {
         if (!nickname.trim()) {
-            alert('닉네임을 입력해주세요')
+            showToast("닉네임을 입력해주세요", "error");
             return
         }
 
         try {
             await updateAccount(nickname)
 
-            alert('닉네임이 변경되었습니다')
+            showToast("닉네임이 변경되었습니다", "success");
 
             navigate('/mypage')
         } catch (err) {
-            console.error(err)
-            alert('닉네임 변경 실패')
+            console.error(err);
+            showToast("닉네임 변경 처리에 오류가 발생했습니다", "fail");
         }
     }
 

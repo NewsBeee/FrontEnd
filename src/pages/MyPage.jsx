@@ -5,6 +5,8 @@ import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
 import Header from "../components/layout/Header";
 import Navigation from "../components/layout/Navigation";
 import logo from "../assets/logo3.png";
+import Error from "../components/common/Error";
+import Loading from "../components/common/Loading";
 import '../styles/mypage.css';
 
 import { useAuth } from "../hooks/useAuth";
@@ -28,8 +30,8 @@ export default function MyPage() {
     const navigate = useNavigate();
     const { clearUser } = useAuth();
 
-    if (loading) return <div>로딩중...</div>;
-    if (error) return <div>에러 발생</div>;
+    if (loading) return <Loading />;
+    if (error) return <Error />;
 
     async function handleLogout() {
         if (!window.confirm('로그아웃 하시겠습니까?')) return;

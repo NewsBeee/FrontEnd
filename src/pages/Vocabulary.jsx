@@ -2,14 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import { IoIosSearch } from "react-icons/io";
 import Header from "../components/layout/Header";
 import BackButton from "../components/common/BackButton";
+import Loading from "../components/common/Loading";
 import "../styles/voca.css"
 
 import { updateStatus } from "../api/wordApi";
 import { useWord } from "../hooks/useWord";
+import { useToast } from '../hooks/useToast'
 
 export default function Vocabulary() {
     const observerRef = useRef(null);
     const { list, setList, loadMore, hasMore, loading } = useWord();
+    const { showToast } = useToast();
+
     const [filter, setFilter] = useState("all");
     const [text, setText] = useState("");
 
@@ -57,7 +61,7 @@ export default function Vocabulary() {
             );
         } catch (e) {
             console.error(e);
-            alert("단어 상태 변경 처리 중 오류가 발생했습니다");
+            showToast("단어 상태 변경 처리 중 오류가 발생했습니다", "fail");
         }
     }
 
@@ -117,7 +121,7 @@ export default function Vocabulary() {
                             </div>
                         ))}
 
-                        {loading && <div>불러오는 중...</div>} 
+                        {loading && <Loading />} 
 
                         <div ref={observerRef} style={{ height: "1px" }} />                 
                     </div>

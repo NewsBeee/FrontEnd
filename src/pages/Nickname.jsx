@@ -6,13 +6,18 @@ import StepIndicator from "../components/common/StepIndicator";
 import '../styles/nickname.css'
 
 import { signUp } from '../api/authApi';
+import { useToast } from '../hooks/useToast'
 
 export default function Nickname() {
     const location = useLocation();
     const navigate = useNavigate();
+    const { showToast } = useToast();
 
     const { email, password } = location.state || {};
     const [nickname, setNickname] = useState('');
+    const [nicknameError, setNicknameError] = useState('');
+
+    const isEmpty = !nickname.trim();
 
     async function handleSignup(e) {
         e.preventDefault();
@@ -23,10 +28,13 @@ export default function Nickname() {
             return;
         }
 
-        if (!nickname) {
-            alert('닉네임을 입력해주세요.');
+        if (!nickname.trim()) {
+            setNicknameError('닉네임을 입력해주세요.')
+            showToast("닉네임을 입력해주세요.", "error");
             return;
         }
+
+        setNicknameError("");
 
         try {
             await signUp({ email, password, nickname });
@@ -34,7 +42,7 @@ export default function Nickname() {
             navigate('/signup/onboarding');
         } catch (err) {
             console.error(err);
-            alert("회원가입에 실패했습니다.")
+            showToast(err.message, "fail");
         }
     }
 
@@ -55,13 +63,23 @@ export default function Nickname() {
                                 <input
                                     type="text"
                                     value={nickname}
-                                    onChange={(e) => setNickname(e.target.value)}
+                                    onChange={(e) => {
+                                        setNickname(e.target.value);
+                                        setNicknameError('');
+                                    }}
                                 />
-                                <p>닉네임은 2~10자 이내로 입력해주세요.</p>
+                                {nicknameError ? (
+                                    <p className="error-message">{nicknameError}</p>
+                                ) : (
+                                    <p>닉네임은 2~10자 이내로 입력해주세요.</p>
+                                )}
                             </div>
                         </form>
                     </div>
-                    <button className="nickname-btn" form="nicknameForm">
+                    <button 
+                        className={`nickname-btn ${isEmpty ? 'disabled' : ''}`}
+                        form="nicknameForm"
+                    >
                         다음
                     </button>
                 </div>
