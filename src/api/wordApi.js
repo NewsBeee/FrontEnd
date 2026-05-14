@@ -1,5 +1,4 @@
-// const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // 기사 내 단어 저장
 export async function saveVoca({ articleId, word, meaning}) {
