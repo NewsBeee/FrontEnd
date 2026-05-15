@@ -6,11 +6,13 @@ import StepIndicator from "../components/common/StepIndicator";
 import '../styles/nickname.css'
 
 import { signUp } from '../api/authApi';
-import { useToast } from '../hooks/useToast'
+import { useAuth } from '../hooks/useAuth';
+import { useToast } from '../hooks/useToast';
 
 export default function Nickname() {
     const location = useLocation();
     const navigate = useNavigate();
+    const { saveUser } = useAuth();
     const { showToast } = useToast();
 
     const email = location.state?.email;
