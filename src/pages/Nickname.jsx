@@ -39,6 +39,8 @@ export default function Nickname() {
         try {
             await signUp({ email, password, nickname });
 
+            saveUser(data.result);
+
             navigate('/signup/onboarding');
         } catch (err) {
             console.error(err);
