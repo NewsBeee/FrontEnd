@@ -4,40 +4,27 @@ import { getCurrentChallenge, getChallengeProgress, getChallengeHistory } from "
 export function convertDailyStatus(dailyStatus) {
     if (!dailyStatus) return {};
 
-    const result = {};
-
-    const weekDays = ['월','화','수','목','금','토','일'];
+    const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
     const dayMap = {
-        '월': 'mon',
-        '화': 'tue',
-        '수': 'wed',
-        '목': 'thu',
-        '금': 'fri',
-        '토': 'sat',
-        '일': 'sun'
+        '일': 'sun', '월': 'mon', '화': 'tue', '수': 'wed', 
+        '목': 'thu', '금': 'fri', '토': 'sat'
     };
 
-    const todayIndex = new Date().getDay();
-    const weekOrder = ['sun','mon','tue','wed','thu','fri','sat'];
-    const todayKey = weekOrder[todayIndex];
+    const result = {};
+    const today = new Date().getDay();
 
-    weekDays.forEach((day) => {
+    weekDays.forEach((day, index) => {
         const key = dayMap[day];
 
-        if (key === todayKey) {
-            result[day] = 'pending'; // 오늘
-        } else if (dailyStatus[key]) {
-            result[day] = 'read';
+        if (dailyStatus[key]) {
+            result[day] = 'read'; // true로 온 경우
+        } else if (index === today) {
+            result[day] = 'pending'; // 오늘, 안 읽음
+        } else if (index > today) {
+            result[day] = 'none'; // 미래
         } else {
-            const currentIdx = weekOrder.indexOf(key);
-            const todayIdx = weekOrder.indexOf(todayKey);
-
-            if (currentIdx > todayIdx) {
-                    result[day] = 'none';
-            } else {
-                    result[day] = 'unread';
-            }
+            result[day] = 'unread'; // 과거, 안 읽음
         }
     });
 
@@ -46,9 +33,12 @@ export function convertDailyStatus(dailyStatus) {
 
 // 초기화 요일 계산
 function getDayOfWeek(dateString) {
-    const date = new Date(dateString);
-    date.setDate(date.getDate() + 7);
-    const days = ['일','월','화','수','목','금','토'];
+    if (!dateString) return '';
+
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day); 
+    
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
     return days[date.getDay()];
 }
 
@@ -59,35 +49,43 @@ export function useChallenge() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const challenge = await getCurrentChallenge();
+    const fetchData = async () => {
+        try {
+            setLoading(true);
 
-                setChallenge(challenge);
+            const challenge = await getCurrentChallenge();
+            console.log(challenge);
 
-                if (!challenge?.challengeId || !challenge?.weekStart) {
-                    const history = await getChallengeHistory();
-                    setHistory(history);
-                    return
-                }
+            setChallenge(challenge);
 
-                const progress = await getChallengeProgress(challenge.weekStart);
-
-                setProgress(progress);
-
+            if (!challenge?.challengeId || !challenge?.weekStart) {
                 const history = await getChallengeHistory();
+                console.log("2. getChallengeHistory(챌린지없음) 결과:", history);
 
                 setHistory(history);
-
-            } catch (err) {
-                console.error(err);
-                setError(err);
-            } finally {
-                setLoading(false);
+                return
             }
-        }
 
+            console.log("3. progress 요청 보낼 weekStart:", challenge.weekStart);
+            const progress = await getChallengeProgress(challenge.weekStart);
+            console.log("4. getChallengeProgress 결과:", progress);
+
+            setProgress(progress);
+
+            const history = await getChallengeHistory();
+            console.log("5. getChallengeHistory(챌린지있음) 결과:", history);
+
+            setHistory(history);
+
+        } catch (err) {
+            console.error(err);
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -108,6 +106,7 @@ export function useChallenge() {
         readingStatus,
         resetDay,
         loading, 
-        error 
+        error,
+        retry: fetchData
     };
 }

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import Header from "../components/layout/Header";
 import Logo from "../assets/logo3.png"
 import PromotionImg from "../assets/image.png"
@@ -9,9 +9,12 @@ import "../styles/splash.css"
 export default function Splash() {
     const navigate = useNavigate();
     const { type } = useParams();
+    const location = useLocation();
+
+    const result = location.state?.result;
 
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             if (type === "onboarding") {
                 navigate("/");
             } else {
@@ -22,7 +25,7 @@ export default function Splash() {
         }, 2000);
         
         return () => clearTimeout(timer);
-    }, []);
+    }, [type, navigate, result]);
 
     return (
         <>

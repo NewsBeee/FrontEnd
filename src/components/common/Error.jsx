@@ -1,7 +1,7 @@
 import ErrImg from '../../assets/sad.png';
 import './styles/error.css'
 
-export default function Error({ message = "오류가 발생했습니다.", onRetry }) {
+export default function Error({ message, onRetry }) {
     return(
         <div className="error-page">
             <p>{message}</p>

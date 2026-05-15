@@ -1,6 +1,5 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-
 // 현재 주간 목표 조회
 export async function getCurrentChallenge() {
     const res = await fetch(`${BASE_URL}/newsbee/challenges/current`, {
@@ -23,24 +22,33 @@ export async function getCurrentChallenge() {
 
 // 주간 학습 진행 현황 조회
 export async function getChallengeProgress(weekStart) { 
-    const params = new URLSearchParams({weekStart});
+    const date = new Date(weekStart);
+
+    date.setDate(date.getDate() + 1);
+
+    const correctedWeekStart = date.toISOString().split('T')[0];
+
+    const params = new URLSearchParams({ weekStart: correctedWeekStart});
 
     const res = await fetch(`${BASE_URL}/newsbee/challenges/progress?${params}`, {
         method: 'GET',
         credentials: 'include',
     }); 
 
+    const data = await res.json();
+
+    console.log(data)
+
+    if (res.status === 404 && data.code === "CHALLENGE_604") {
+        console.log("해당 주차의 상세 진행 데이터가 없습니다.");
+        return null; 
+    }
+
     if (!res.ok) {
-        throw new Error("주간 학습 진행 현황 조회 실패"); 
+        throw new Error(data.message || "주간 학습 진행 현황 조회 실패"); 
     }
 
-    const { success, result, message } = await res.json();
-
-    if (!success) {
-        throw new Error(message);
-    }
-
-    return result; 
+    return data.result; 
 }
 
 // 주간 챌린지 달성 이력 조회

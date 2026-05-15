@@ -5,7 +5,7 @@ import Header from "../components/layout/Header";
 import StepIndicator from "../components/common/StepIndicator";
 import '../styles/nickname.css'
 
-import { signUp } from '../api/authApi';
+import { signUp, login } from '../api/authApi';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/useToast';
 
@@ -42,8 +42,14 @@ export default function Nickname() {
 
         try {
             await signUp({ email, password, nickname });
+            console.log("회원가입 성공");
 
-            saveUser(data.result);
+            const loginData = await login({email, password});
+            console.log("로그인 성공")
+
+            if (loginData && loginData.result) {
+                saveUser(loginData.result); 
+            }
 
             navigate('/signup/onboarding');
         } catch (err) {

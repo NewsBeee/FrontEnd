@@ -13,6 +13,7 @@ export function usePromotion() {
 
     const loadPromotion = async () => {
         try {
+            setLoading(true);
             setError(null);
 
             const data = await fetchPromotion();

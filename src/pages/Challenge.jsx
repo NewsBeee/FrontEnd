@@ -25,12 +25,20 @@ export default function Challenge() {
         readingStatus, 
         resetDay,
         loading, 
-        error
+        error,
+        retry
      } = useChallenge();
 
     if (loading) return <Loading />;
-    if (error) return <Error />;
-
+    if (error) {
+        return (
+            <Error 
+                message="챌린지 화면을 불러오지 못했습니다."
+                onRetry={retry}
+            />
+        )
+    }
+    
     const percent = goal > 0 ? Math.min((completed / goal) * 100, 100) : 0;
 
     const stamps = [1, 2, 3, 4];

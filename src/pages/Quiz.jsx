@@ -27,7 +27,8 @@ export default function Quiz() {
         selectedChoiceId,
         selectAnswer,
         submitAnswer,
-        result
+        result,
+        retry
     } = quizHook;
 
     useEffect(() => {
@@ -55,7 +56,14 @@ export default function Quiz() {
             />
         );
     }
-    if (!currentQuestion) return <Error />;
+    if (!currentQuestion) {
+        return (
+            <Error 
+                message="문항이 없습니다."
+                onRetry={quizHook.retry}
+            />
+        );
+    }
 
     return (
         <>

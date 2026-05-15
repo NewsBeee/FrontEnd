@@ -13,6 +13,7 @@ export function useOnboarding() {
 
     const loadOnboarding = async () => {
         try {
+            setLoading(true);
             setError(null);
 
             const data = await fetchOnboarding();
