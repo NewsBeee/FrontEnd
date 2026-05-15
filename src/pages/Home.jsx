@@ -54,9 +54,9 @@ export default function Home() {
       } catch (err) {
         console.error('비회원 잔여 횟수 조회 오류:',err);
       }
-
-      fetchGuestCount();
     }
+    
+    fetchGuestCount();
   }, [user]);
 
   async function openListModal() {

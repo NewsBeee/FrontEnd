@@ -1,7 +1,7 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // 기사 변환
-export async function convertArticle(link) {
+export async function convertArticle({link, summary_count}) {
     const res = await fetch(`${BASE_URL}/newsbee/articles/transform`, {
         method: 'POST',
         headers: {
@@ -13,6 +13,8 @@ export async function convertArticle(link) {
             summary_count,
         }),
     });
+
+    const data = await res.json();
     
     if (!res.ok) {
         const error = new Error(data.message || '기사 변환 실패');
