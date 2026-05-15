@@ -50,7 +50,7 @@ export default function Home() {
     async function fetchGuestCount() {
       try {
         const data = await getQuota();
-        setGuestCount(data.result.remainingCount);
+        setGuestCount(data.nowCount);
       } catch (err) {
         console.error('비회원 잔여 횟수 조회 오류:',err);
         setGuestCount(5);
