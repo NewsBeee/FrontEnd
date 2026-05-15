@@ -5,8 +5,16 @@ import "./styles/back-button.css"
 export default function BackButton() {
     const navigate = useNavigate();
 
+    function handleBack() {
+        if (to) {
+            navigate(to, { state });
+        } else {
+            navigate(-1);
+        }
+    }
+
     return (
-        <button onClick={() => navigate(-1)} className="back-btn">
+        <button onClick={handleBack} className="back-btn">
             <GoChevronLeft size={35} strokeWidth={1}/>
         </button>
     )

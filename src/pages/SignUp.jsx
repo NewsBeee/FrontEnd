@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Header from '../components/layout/Header'
 import BackButton from '../components/common/BackButton'
 import StepIndicator from '../components/common/StepIndicator'
@@ -8,10 +8,11 @@ import '../styles/signup.css'
 import { useToast } from '../hooks/useToast'
 
 export default function SignUp() {
+    const location = useLocation();
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [email, setEmail] = useState(location.state?.email || '');
+    const [password, setPassword] = useState(location.state?.password || '');
+    const [confirmPassword, setConfirmPassword] = useState(location.state?.confirmPassword || '');
     const [pwError, setPwError] = useState(false);
     const [errors, setErrors] = useState({});
 
@@ -52,7 +53,7 @@ export default function SignUp() {
         setPwError(false);
 
         navigate('/signup/nickname', { 
-            state: { email, password }
+            state: { email, password, confirmPassword }
         });
     }
 

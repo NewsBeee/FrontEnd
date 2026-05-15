@@ -13,7 +13,9 @@ export default function Nickname() {
     const navigate = useNavigate();
     const { showToast } = useToast();
 
-    const { email, password } = location.state || {};
+    const email = location.state?.email;
+    const password = location.state?.password;
+    const confirmPassword = location.state?.confirmPassword;
     const [nickname, setNickname] = useState('');
     const [nicknameError, setNicknameError] = useState('');
 
@@ -50,7 +52,7 @@ export default function Nickname() {
 
     return (
         <>
-            <Header left={<BackButton />} />
+            <Header left={<BackButton to="/signup" state={{email, password, confirmPassword}}/>} />
             <StepIndicator currentStep={2} />
             <main className="main-content">
                 <div className="nickname-wrapper">
