@@ -45,14 +45,15 @@ export default function Home() {
 
   // 비회원 잔여 횟수
   useEffect(() => {
-    async function fetchGuestCount() {
-      if (user) return;
+    if (user) return;
 
+    async function fetchGuestCount() {
       try {
         const data = await getQuota();
-        setGuestCount(data);
+        setGuestCount(data.result.remainingCount);
       } catch (err) {
         console.error('비회원 잔여 횟수 조회 오류:',err);
+        setGuestCount(5);
       }
     }
     
@@ -141,8 +142,13 @@ export default function Home() {
               </div>
               <div>변환하고 싶은 기사를 <br /> 입력해주세요</div>
               <div className='home-status'>
-                {user ? '기사의 링크를 복사해주세요!' : '비로그인 시 최대 5회까지 변환할 수 있습니다'}
-                </div>
+                {user 
+                  ? '기사의 링크를 복사해주세요!' 
+                  : guestCount == null || guestCount === 5 
+                    ? '비로그인 시 최대 5회까지 변환할 수 있습니다'
+                    : `변환 횟수 ${guestCount}회 남았습니다.`
+                }
+              </div> 
             </div>
 
             <form className='home-input' onSubmit={handleSubmit}>
