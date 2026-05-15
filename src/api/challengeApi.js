@@ -8,17 +8,17 @@ export async function getCurrentChallenge() {
         credentials: 'include',
     });
 
+    const data = await res.json();
+
+    if (res.status === 404 && data.code === "CHALLENGE_604") {
+        return null;
+    }
+
     if (!res.ok) {
-        throw new Error("현재 주간 목표 조회 실패");
+        throw new Error(data.message || "현재 주간 목표 조회 실패");
     }
 
-    const { success, result, message} = await res.json();
-
-    if (!success) {
-        throw new Error(message);
-    }
-
-    return result;
+    return data.result;
 }
 
 // 주간 학습 진행 현황 조회
