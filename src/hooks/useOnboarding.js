@@ -11,20 +11,24 @@ export function useOnboarding() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const loadOnboarding = async () => {
-            try {
-                const data = await fetchOnboarding();
+    const loadOnboarding = async () => {
+        try {
+            setError(null);
 
-                setSessionId(data.sessionId);
-                setCurrentQuestion(data.question);
-            } catch (err) {
-                console.error(err);
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
+            const data = await fetchOnboarding();
+
+            setSessionId(data.sessionId);
+            setCurrentQuestion(data.question);
+            setSelectedChoiceId(null);
+        } catch (err) {
+            console.error(err);
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         loadOnboarding();
     }, []);
 
@@ -39,6 +43,8 @@ export function useOnboarding() {
         }
 
         try {
+            setError(null);
+
             const res = await submitOnboarding({
                 sessionId,
                 choiceId: selectedChoiceId,
@@ -70,6 +76,7 @@ export function useOnboarding() {
         selectedChoiceId,
         selectAnswer,
         submitAnswer,
-        result
+        result,
+        retry: loadOnboarding,
     } 
 }

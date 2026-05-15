@@ -11,20 +11,24 @@ export function usePromotion() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const loadPromotion = async () => {
-            try {
-                const data = await fetchPromotion();
+    const loadPromotion = async () => {
+        try {
+            setError(null);
 
-                setSessionId(data.sessionId);
-                setCurrentQuestion(data.question);
-            } catch (err) {
-                console.error(err);
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
+            const data = await fetchPromotion();
+
+            setSessionId(data.sessionId);
+            setCurrentQuestion(data.question);
+            setSelectedChoiceId(null);
+        } catch (err) {
+            console.error(err);
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         loadPromotion();
     }, []);
 
@@ -39,6 +43,8 @@ export function usePromotion() {
         }
 
         try {
+            setError(null);
+
             const res = await submitPromotion({
                 sessiondId,
                 choiceId: selectedChoiceId
@@ -70,6 +76,7 @@ export function usePromotion() {
         selectedChoiceId,
         selectAnswer,
         submitAnswer,
-        result
+        result,
+        retry: loadPromotion,
     } 
 }

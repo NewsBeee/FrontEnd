@@ -1,14 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import ErrImg from '../../assets/sad.png';
 import './styles/error.css'
 
-export default function Error() {
-    const navigate = useNavigate();
+export default function Error({ message = "오류가 발생했습니다.", onRetry }) {
     return(
         <div className="error-page">
-            <p>오류가 발생했습니다</p>
+            <p>{message}</p>
             <img src={ErrImg} width={150} />
-            <button onClick={() => navigate("/")}>홈으로 돌아가기</button>
+            {onRetry && (<button onClick={onRetry}>다시 시도</button>)}
         </div>
     )
 }

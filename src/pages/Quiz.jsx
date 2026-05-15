@@ -47,7 +47,14 @@ export default function Quiz() {
     }, [result, type, navigate]);
 
     if (loading) return <Loading />;
-    if (error) return <Error />;
+    if (error) {
+        return (
+            <Error 
+                message="문항을 불러오지 못했습니다."
+                onRetry={quizHook.retry}
+            />
+        );
+    }
     if (!currentQuestion) return <Error />;
 
     return (
@@ -81,7 +88,7 @@ export default function Quiz() {
                         {currentQuestion.choices?.map(choice => (
                             <button 
                                 key={choice.choiceId}
-                                className={selected === choice.choiceId ? "active" : ""}
+                                className={selectedChoiceId === choice.choiceId ? "active" : ""}
                                 onClick={() => {
                                     selectAnswer(choice.choiceId);
                                 }}

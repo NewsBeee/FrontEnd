@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { GoChevronLeft } from "react-icons/go";
 import "./styles/back-button.css"
 
-export default function BackButton() {
+export default function BackButton({to, state}) {
     const navigate = useNavigate();
 
     function handleBack() {
