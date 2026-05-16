@@ -5,7 +5,6 @@ export function useOnboarding() {
     const [sessionId, setSessionId] = useState(null);
     const [currentQuestion, setCurrentQuestion] = useState(null);
     const [selectedChoiceId, setSelectedChoiceId] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(0);
     const [result, setResult] = useState(null);
 
     const [loading, setLoading] = useState(true);
@@ -18,7 +17,7 @@ export function useOnboarding() {
 
             const data = await fetchOnboarding();
 
-            console.log("온보딩 질문 로드:", data);
+            console.log("온보딩 응답:", data);
 
             setSessionId(data.sessionId);
             setCurrentQuestion(data.question);
@@ -58,12 +57,9 @@ export function useOnboarding() {
                 return;
             }
 
-            const nextQuestion = await fetchOnboarding();
-
-            setSessionId(nextQuestion.sessionId);
-            setCurrentQuestion(nextQuestion.question);
+            setSessionId(res.sessionId);
+            setCurrentQuestion(res.nextQuestion);
             setSelectedChoiceId(null);
-            setCurrentIndex((prev) => prev + 1);
         } catch (err) {
             console.error(err);
             setError(err);
@@ -75,7 +71,6 @@ export function useOnboarding() {
         error,
         sessionId,
         currentQuestion,
-        currentIndex,
         selectedChoiceId,
         selectAnswer,
         submitAnswer,

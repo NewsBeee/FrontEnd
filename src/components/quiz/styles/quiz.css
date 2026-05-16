@@ -29,14 +29,8 @@
     width: fit-content;
 }
 
-.quiz-question {
-    font-size: 15px;
-}
-
 .quiz.meaning {
-    font-size: 32px;
-    font-weight: 500;
-    margin: 20px 0;
+    font-size: 15px;
 }
 
 .quiz.blank {

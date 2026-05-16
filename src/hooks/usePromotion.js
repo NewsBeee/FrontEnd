@@ -5,7 +5,6 @@ export function usePromotion() {
     const [sessionId, setSessionId] = useState(null);
     const [currentQuestion, setCurrentQuestion] = useState(null);
     const [selectedChoiceId, setSelectedChoiceId] = useState(null);
-    const [currentIndex, setCurrentIndex] = useState(0);
     const [result, setResult] = useState(null);
 
     const [loading, setLoading] = useState(true);
@@ -17,6 +16,8 @@ export function usePromotion() {
             setError(null);
 
             const data = await fetchPromotion();
+
+            console.log("승급 퀴즈 응답:", data);
 
             setSessionId(data.sessionId);
             setCurrentQuestion(data.question);
@@ -56,12 +57,10 @@ export function usePromotion() {
                 return;
             }
 
-            const nextQuestion = await fetchPromotion();
 
-            setSessionId(nextQuestion.sessionId);
-            setCurrentQuestion(nextQuestion.question);
+            setSessionId(res.sessionId);
+            setCurrentQuestion(res.nextQuestion);
             setSelectedChoiceId(null);
-            setCurrentIndex((prev) => prev + 1);
         } catch (err) {
             console.error(err);
             setError(err);
@@ -73,7 +72,6 @@ export function usePromotion() {
         error,
         sessionId,
         currentQuestion,
-        currentIndex,
         selectedChoiceId,
         selectAnswer,
         submitAnswer,

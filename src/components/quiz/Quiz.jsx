@@ -10,7 +10,7 @@ import "./styles/quiz.css";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function Quiz({ type, loading, error, sessionId, 
-    currentQuestion, currentIndex, selectedChoiceId, 
+    currentQuestion, selectedChoiceId, 
     selectAnswer, submitAnswer, result, retry 
 }) {
     const navigate = useNavigate();
@@ -65,24 +65,16 @@ export default function Quiz({ type, loading, error, sessionId,
                 <div className="quiz-wrapper">
                     <div className="quiz-container">
                         <div className="quiz-number">
-                            {currentIndex + 1}/10
+                            {currentQuestion.questionNumber}/{currentQuestion.totalQuestions}
                         </div>
                         <div className="quiz-theme">
-                            {currentQuestion.questionText?.includes("빈칸")
-                                ? "빈칸 채우기"
-                                : currentQuestion.questionText?.includes("뜻")
-                                ? "뜻 고르기"
-                                : ""
-                            }
+                            {currentQuestion.type === "fill_blank" && "빈칸 채우기"}
+                            {currentQuestion.type === "meaning_choice" && "뜻 고르기"}
                         </div>
-                        <div className="quiz-question">
+                        <div className={`quiz ${currentQuestion.type}`}>
                             {currentQuestion.questionText}
                         </div>
                     </div>
-                    
-                    {/* <div className={`quiz ${cq.questionType}`}>
-                        {cq.example}
-                    </div> */}
                     <div className="quiz-answer">
                         {currentQuestion.choices?.map(choice => (
                             <button 
