@@ -47,7 +47,7 @@ export function usePromotion() {
             setError(null);
 
             const res = await submitPromotion({
-                sessiondId,
+                sessionId,
                 choiceId: selectedChoiceId
             });
             

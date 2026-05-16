@@ -48,10 +48,13 @@ export default function Nickname() {
             console.log("로그인 성공")
 
             if (loginData && loginData.result) {
-                saveUser(loginData.result); 
+                saveUser({
+                    ...loginData.result, 
+                    onboardingCompleted: false 
+                }); 
             }
 
-            navigate('/signup/onboarding');
+            navigate('/quiz-intro/onboarding');
         } catch (err) {
             console.error(err);
             showToast(err.message, "fail");

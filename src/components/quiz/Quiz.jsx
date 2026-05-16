@@ -1,35 +1,20 @@
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import StepIndicator from "../components/common/StepIndicator";
-import Header from "../components/layout/Header";
-import Logo from '../assets/logo3.png';
-import Loading from "../components/common/Loading";
-import Error from "../components/common/Error";
-import "../styles/quiz.css";
+import { useNavigate } from "react-router-dom";
+import StepIndicator from "../common/StepIndicator";
+import Header from "../layout/Header";
+import Logo from '../../assets/logo3.png';
+import Loading from "../common/Loading";
+import Error from "../common/Error";
+import "./styles/quiz.css";
 
-import { useOnboarding } from "../hooks/useOnboarding";
-import { usePromotion } from "../hooks/usePromotion";
+import { useAuth } from "../../hooks/useAuth";
 
-export default function Quiz() {
-    const { type } = useParams();
+export default function Quiz({ type, loading, error, sessionId, 
+    currentQuestion, currentIndex, selectedChoiceId, 
+    selectAnswer, submitAnswer, result, retry 
+}) {
     const navigate = useNavigate();
-
-    const obHook = useOnboarding();
-    const pmHook = usePromotion();
-
-    const quizHook = type === "onboarding" ? obHook : pmHook;
-
-    const {
-        loading,
-        error,
-        currentQuestion,
-        currentIndex,
-        selectedChoiceId,
-        selectAnswer,
-        submitAnswer,
-        result,
-        retry
-    } = quizHook;
+    const { user, saveUser } = useAuth();
 
     useEffect(() => {
         if (!result) return;
@@ -41,6 +26,12 @@ export default function Quiz() {
         }
         
         if (type === "onboarding") {
+            saveUser({
+                ...user,
+                onboardingCompleted: true,
+                level: result.level,
+            })
+
             navigate("/splash/onboarding", {
                 state: { type: "onboarding", result }
             });
@@ -52,15 +43,15 @@ export default function Quiz() {
         return (
             <Error 
                 message="문항을 불러오지 못했습니다."
-                onRetry={quizHook.retry}
+                onRetry={retry}
             />
         );
     }
     if (!currentQuestion) {
         return (
             <Error 
-                message="문항이 없습니다."
-                onRetry={quizHook.retry}
+                message="생성된 문항이 없습니다."
+                onRetry={retry}
             />
         );
     }

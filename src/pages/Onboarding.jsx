@@ -1,7 +1,8 @@
-import QuizIntro from "../components/quiz/QuizIntro";
+import Quiz from "../components/quiz/Quiz"
+import { useOnboarding } from "../hooks/useOnboarding"
 
 export default function Onboarding() {
-    return (
-        <QuizIntro type="onboarding" />
-    )
+        const quizData = useOnboarding();
+
+        return <Quiz type="onboarding" {...quizData} />
 }

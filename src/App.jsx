@@ -5,9 +5,9 @@ import Intro from './pages/Intro'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import Nickname from './pages/Nickname'
+import QuizIntro from './pages/QuizIntro'
 import Onboarding from './pages/Onboarding'
-import ChalQuiz from './pages/ChalQuiz'
-import Quiz from './pages/Quiz'
+import Promotion from './pages/Promotion'
 import Splash from './pages/Splash'
 import QuizResult from './pages/QuizResult'
 import Result from './pages/Result'
@@ -18,6 +18,7 @@ import Withdraw from './pages/Withdraw'
 import ProtectedRoute from './components/common/ProtectedRoute'
 import AccountDetail from './pages/AccountDetail'
 import Vocabulary from './pages/Vocabulary'
+
 // import './App.css'
 
 function App() {
@@ -34,9 +35,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signup/nickname" element={<Nickname />} />
+            <Route path="/quiz-intro/:type" element={<QuizIntro />} />
             <Route path="/signup/onboarding" element={<Onboarding />} />
-            <Route path="/promotion" element={<ChalQuiz />}/>
-            <Route path="/quiz/:type" element={<Quiz />} />
+            <Route path="/promotion" element={<Promotion />}/>
             <Route path="/splash/:type" element={<Splash />} />
             <Route path="/promotion/result" element={<QuizResult />} />
             <Route path="/result" element={<Result />} />

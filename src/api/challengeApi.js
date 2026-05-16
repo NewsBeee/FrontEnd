@@ -24,9 +24,10 @@ export async function getCurrentChallenge() {
 export async function getChallengeProgress(weekStart) { 
     const date = new Date(weekStart);
 
-    date.setDate(date.getDate() + 1);
-
-    const correctedWeekStart = date.toISOString().split('T')[0];
+    // 한국 시간 기준 YYYY-MM-DD 형식으로 변환
+    const correctedWeekStart = new Intl.DateTimeFormat('sv-SE', {
+        timeZone: 'Asia/Seoul',
+    }).format(date);
 
     const params = new URLSearchParams({ weekStart: correctedWeekStart});
 

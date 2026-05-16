@@ -141,7 +141,7 @@ export default function Challenge() {
                         </div>
                         {quizAvailable ? (
                             <div className="chal-quiz-btn active">
-                                <Link to='/promotion' className="chal-btn">승급 퀴즈 도전하기</Link>
+                                <Link to='/quiz-intro/promotion' className="chal-btn">승급 퀴즈 도전하기</Link>
                             </div>
                         ):(
                             <div className="chal-quiz-btn">
