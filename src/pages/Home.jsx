@@ -178,7 +178,7 @@ export default function Home() {
                     <Link to='/intro'>로그인</Link> 후 맞춤 추천 기사를 읽어볼 수 있어요
                   </div>
                 ) : recommendations.length > 0 ? (
-                  recommendations.map((article, index) => (
+                  recommendations.slice(0, 7).map((article, index) => (
                     <div key={index} className='recommend-item'>
                       <a href={article.link} target="_blank" rel="noopener noreferrer">
                         {article.title}

@@ -24,7 +24,9 @@ export default function SignUp() {
         e.preventDefault();
 
         const newErrors = {};
+        const passwordRegex = /^[a-zA-Z0-9]{8,16}$/;
 
+        // 빈 필드 확인
         if (!email.trim()) {
             newErrors.email = '이메일을 입력해주세요.';
         }
@@ -44,8 +46,16 @@ export default function SignUp() {
             return;
         }
 
-         if (password !== confirmPassword) {
-            showToast("비밀번호를 확인해주세요.", "error");
+        // 비밀번호 형식 확인
+        if (!passwordRegex.test(password)) {
+            showToast("비밀번호는 형식에 맞게 작성해주세요.", "error");
+            newErrors.password = '비밀번호는 영문, 숫자 조합 8~16자 이내로 입력해주세요.';
+            return;
+        }
+
+        // 비밀번호 일치 확인
+        if (password !== confirmPassword) {
+            showToast("비밀번호가 일치하지 않습니다.", "error");
             setPwError(true);
             return;
         }
