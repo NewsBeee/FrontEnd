@@ -31,7 +31,14 @@ export default function MyPage() {
     const { clearUser } = useAuth();
 
     if (loading) return <Loading />;
-    if (error) return <Error />;
+    if (error) {
+        return (
+            <Error 
+                message="해당 페이지를 불러오지 못했습니다."
+                goHome={true}
+        />
+        )
+    }
 
     async function handleLogout() {
         if (!window.confirm('로그아웃 하시겠습니까?')) return;

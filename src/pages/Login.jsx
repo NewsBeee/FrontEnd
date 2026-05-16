@@ -29,7 +29,13 @@ export default function Login() {
 
             saveUser(data.result);
 
-            navigate('/'); 
+            if (!data.result.onboardingComplete) {
+                showToast("온보딩을 먼저 진행해주세요!", "error");
+                navigate('/quiz-intro/onboarding');
+            } else {
+                navigate('/');
+            }
+
         } catch (error) {
             console.error(error);
             showToast(error.message, "fail");

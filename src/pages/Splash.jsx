@@ -22,7 +22,7 @@ export default function Splash() {
                     state: { result }
                 });
             }
-        }, 2000);
+        }, 2500);
         
         return () => clearTimeout(timer);
     }, [type, navigate, result]);

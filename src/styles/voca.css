@@ -132,3 +132,13 @@
 .toggle-switch.on .toggle-handle {
     transform: translateX(20px);
 }
+
+.empty-voca {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    font-size: 15px;
+    font-weight: 450;
+    color: #727272;
+}

@@ -31,7 +31,7 @@ export function useStats() {
         name: info?.nickname ?? "",
         email: info?.email ?? "",
         level: stats?.level ?? 0,
-        readCount: stats?.readArticleCount ?? 0,
+        readCount: stats?.articleCount ?? 0,
         saveVoca: stats?.savedVocabularyCount ?? 0,
         understood: stats?.understoodVocabularyCount ?? 0,
         notUnderstood: stats?.notUnderstoodVocabularyCount ?? 0,

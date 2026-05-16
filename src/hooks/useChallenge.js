@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { getCurrentChallenge, getChallengeProgress, getChallengeHistory } from "../api/challengeApi";
 
 export function convertDailyStatus(dailyStatus) {
-    if (!dailyStatus) return {};
-
     const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
 
     const dayMap = {
@@ -16,6 +14,11 @@ export function convertDailyStatus(dailyStatus) {
 
     weekDays.forEach((day, index) => {
         const key = dayMap[day];
+
+        if (!dailyStatus) {
+            result[day] = 'none';
+            return;
+        }
 
         if (dailyStatus[key]) {
             result[day] = 'read'; // true로 온 경우

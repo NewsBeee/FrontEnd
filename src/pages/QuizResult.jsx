@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
+import Error from "../components/common/Error";
 import SuccessImg from '../assets/finish.png';
 import FailImg from '../assets/sad2.png';
 import '../styles/quiz-result.css';
@@ -9,7 +10,7 @@ export default function QuizResult() {
     const navigate = useNavigate();
     const { result } = location.state || {};
 
-    // if (!result) return <div>잘못된 접근입니다.</div>;
+    if (!result) return <Error />;
 
     const isPassed = true// result.passed;
 

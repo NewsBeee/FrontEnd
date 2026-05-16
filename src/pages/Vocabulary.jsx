@@ -106,20 +106,24 @@ export default function Vocabulary() {
                     </div>
 
                     <div className="vocabulary">
-                        {filterVoca.map(item => (
-                            <div className="voca-container" key={item.vocaId}>
-                                <div className="word-items">
-                                    <div className="word">{item.word}</div>
-                                    <div className="meaning">{item.meaning}</div>
+                        {filterVoca.length === 0 ? (
+                            <div className="empty-voca">아직 저장된 단어가 없습니다</div>
+                        ) : (
+                            filterVoca.map(item => (
+                                <div className="voca-container" key={item.vocaId}>
+                                    <div className="word-items">
+                                        <div className="word">{item.word}</div>
+                                        <div className="meaning">{item.meaning}</div>
+                                    </div>
+                                    <button 
+                                        className={`toggle-switch ${item.status === "MEMORIZED" ? "on" : ""}`}
+                                        onClick={() => toggleStatus(item.vocaId, item.status)}
+                                    >
+                                        <span className="toggle-handle"></span>
+                                    </button>
                                 </div>
-                                <button 
-                                    className={`toggle-switch ${item.status === "MEMORIZED" ? "on" : ""}`}
-                                    onClick={() => toggleStatus(item.vocaId, item.status)}
-                                >
-                                    <span className="toggle-handle"></span>
-                                </button>
-                            </div>
-                        ))}
+                            ))
+                        )}
 
                         {loading && <Loading />} 
 

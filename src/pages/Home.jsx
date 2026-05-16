@@ -105,8 +105,6 @@ export default function Home() {
         await recordRead(articleId);
         console.log("읽기 기록 저장 완료")
       } 
-
-      console.log("페이지 이동");
     
       navigate("/result", {
         state: { article },
@@ -129,7 +127,7 @@ export default function Home() {
     }
   }
 
-  if (convertLoading) return <Loading />;
+  if (convertLoading) return <Loading message="어휘를 변환하고 있어요!" />;
 
   return (
     <>

@@ -10,8 +10,8 @@ import { useAuth } from "../hooks/useAuth";
 import { useToast } from '../hooks/useToast'
 
 export default function Withdraw() {
-    const [loading, setLoading] = useState(false);
     const navigate = useNavigate(); 
+    const [loading, setLoading] = useState(false);
     const { clearUser } = useAuth();
     const { showToast } = useToast();
     

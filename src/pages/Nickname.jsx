@@ -42,16 +42,13 @@ export default function Nickname() {
 
         try {
             await signUp({ email, password, nickname });
-            console.log("회원가입 성공");
+            console.log("회원가입 완료");
 
             const loginData = await login({email, password});
-            console.log("로그인 성공")
+            console.log("로그인 완료")
 
             if (loginData && loginData.result) {
-                saveUser({
-                    ...loginData.result, 
-                    onboardingCompleted: false 
-                }); 
+                saveUser(loginData.result); 
             }
 
             navigate('/quiz-intro/onboarding');

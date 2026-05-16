@@ -33,8 +33,8 @@ export default function Challenge() {
     if (error) {
         return (
             <Error 
-                message="챌린지 화면을 불러오지 못했습니다."
-                onRetry={retry}
+                message="해당 페이지를 불러오지 못했습니다."
+                goHome={true}
             />
         )
     }
