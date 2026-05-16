@@ -6,7 +6,7 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const stored = localStorage.getItem('user');
+        const stored = sessionStorage.getItem('user');
 
         if (stored) {
             setUser(JSON.parse(stored));
@@ -14,12 +14,12 @@ export function AuthProvider({ children }) {
     }, []);
 
     const saveUser = (userData) => {
-        localStorage.setItem('user', JSON.stringify(userData));
+        sessionStorage.setItem('user', JSON.stringify(userData));
         setUser(userData);
     };
 
     const clearUser = () => {
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
         setUser(null);
     }
 

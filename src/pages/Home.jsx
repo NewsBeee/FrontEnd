@@ -95,13 +95,18 @@ export default function Home() {
         summary_count: summaryCount,
       });
 
+      console.log("변환 응답:", data);
+
       const article = data.result;
       const articleId = article.articleId;
 
       // 기사 읽기 기록 저장 요청
       if (user) {
         await recordRead(articleId);
+        console.log("읽기 기록 저장 완료")
       } 
+
+      console.log("페이지 이동");
     
       navigate("/result", {
         state: { article },
@@ -116,9 +121,11 @@ export default function Home() {
         showToast("비로그인 사용자는 최대 5회까지 변환할 수 있습니다", "error");
         navigate("/intro");
         return;
-      }
+      } 
 
       alert(err.message);
+    } finally {
+      setConvertLoading(false);
     }
   }
 
