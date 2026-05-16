@@ -11,6 +11,7 @@ import { convertArticle, getQuota, getRecommendation, recordRead } from '../api/
 import { useAuth } from '../hooks/useAuth'
 import { useArticles } from '../hooks/useArticles'
 import { useToast } from '../hooks/useToast'
+import Loading from '../components/common/Loading'
 
 export default function Home() {
   const [isListOpen, setIsListOpen] = useState(false);
@@ -18,11 +19,14 @@ export default function Home() {
   const [recommendations, setRecommendations] = useState([]);
   const [guestCount, setGuestCount] = useState(null);
   const [summaryCount, setSummaryCount] = useState(5);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { user } = useAuth();
   const { list, loadMore, hasMore, loading, reset } = useArticles(); 
   const { showToast } = useToast();
+
+  if (Loading) return <Loading />;
 
   // 추천 기사
   useEffect(() => {
@@ -86,6 +90,8 @@ export default function Home() {
     }
 
     try {
+      setLoading(true);
+      
       const data = await convertArticle({
         link,
         summary_count: summaryCount,
@@ -115,6 +121,8 @@ export default function Home() {
       }
 
       alert(err.message);
+    } finally {
+      setLoading(false);
     }
   }
 

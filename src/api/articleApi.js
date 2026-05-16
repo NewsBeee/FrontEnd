@@ -28,7 +28,7 @@ export async function convertArticle({link, summary_count}) {
 
 // 기사 읽기 기록 저장
 export async function recordRead(articleId) {
-    const res = await fetch(`${BASE_URL}/newsbee/articles/${articledId}/read`, {
+    const res = await fetch(`${BASE_URL}/newsbee/articles/${articleId}/read`, {
         method: 'POST',
         credentials: "include",
     });
