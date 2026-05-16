@@ -18,6 +18,8 @@ export function useOnboarding() {
 
             const data = await fetchOnboarding();
 
+            console.log("온보딩 질문 로드:", data);
+
             setSessionId(data.sessionId);
             setCurrentQuestion(data.question);
             setSelectedChoiceId(null);

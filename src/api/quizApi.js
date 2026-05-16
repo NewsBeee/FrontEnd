@@ -55,7 +55,7 @@ export const fetchOnboarding = async () => {
 }
 
 // 온보딩 답안 제출
-export const submitOnboarding = async ({ sessiondId, choiceId }) => {
+export const submitOnboarding = async ({ sessionId, choiceId }) => {
     const res = await fetch(`${BASE_URL}/newsbee/onboarding/submit`, {
         method: "POST",
         credentials: "include",

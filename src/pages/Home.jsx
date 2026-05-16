@@ -26,8 +26,6 @@ export default function Home() {
   const { list, loadMore, hasMore, loading, reset } = useArticles(); 
   const { showToast } = useToast();
 
-  if (convertLoading) return <Loading />;
-
   // 추천 기사
   useEffect(() => {
     async function fetchRecommendations() {
@@ -121,10 +119,10 @@ export default function Home() {
       }
 
       alert(err.message);
-    } finally {
-      setConvertLoading(false);
     }
   }
+
+  if (convertLoading) return <Loading />;
 
   return (
     <>
