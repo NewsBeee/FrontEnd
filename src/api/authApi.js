@@ -103,10 +103,12 @@ export async function updateAccount(nickname) {
         body: JSON.stringify({ nickname })
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
         console.error('회원정보 수정 실패:', res.status);
         throw new Error('회원정보 수정 오류')
     }
 
-    return await res.json();
+    return data;
 }

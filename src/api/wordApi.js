@@ -15,11 +15,13 @@ export async function saveVoca({ articleId, word, meaning}) {
          }),
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-        throw new Error('단어 저장 실패');
+        throw new Error(data.message || '단어 저장 실패');
     }
 
-    return await res.json();
+    return data;
 }
 
 // 저장 단어 목록 조회
@@ -32,11 +34,11 @@ export async function getVoca(page = 0, size = 20) {
         }
     );
 
-    if (!res.ok) {
-        throw new Error('단어장 조회 실패');
-    }
-
     const data = await res.json();
+
+    if (!res.ok) {
+        throw new Error(data.message || '단어장 조회 실패');
+    }
 
     return data.result.vocabularies;
 }
@@ -52,11 +54,11 @@ export async function updateStatus({ vocaId, status }) {
         body: JSON.stringify({ status })
     });
 
-    if (!res.ok) {
-        throw new Error('단어 학습 상태 변경 실패');
-    }
-
     const data = await res.json();
+
+    if (!res.ok) {
+        throw new Error(data.message || '단어 학습 상태 변경 실패');
+    }
 
     return data.result;
 }

@@ -33,11 +33,13 @@ export async function recordRead(articleId) {
         credentials: "include",
     });
     
+    const data = await res.json();
+
     if (!res.ok) {
-        throw new Error('읽기 기록 저장 오류')
+        throw new Error(data.message || '읽기 기록 저장 오류');
     }
     
-    return await res.json();
+    return data;
 }
 
 // 추천 기사
