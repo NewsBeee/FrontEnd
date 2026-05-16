@@ -56,8 +56,7 @@ export function useOnboarding() {
                 setResult(res);
                 return;
             }
-
-            setSessionId(res.sessionId);
+            
             setCurrentQuestion(res.nextQuestion);
             setSelectedChoiceId(null);
         } catch (err) {

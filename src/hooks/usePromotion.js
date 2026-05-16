@@ -57,8 +57,6 @@ export function usePromotion() {
                 return;
             }
 
-
-            setSessionId(res.sessionId);
             setCurrentQuestion(res.nextQuestion);
             setSelectedChoiceId(null);
         } catch (err) {
