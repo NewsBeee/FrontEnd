@@ -23,7 +23,7 @@ export async function convertArticle({link, summary_count}) {
         throw error;
     }
 
-    return await res.json();
+    return data;
 }
 
 // 기사 읽기 기록 저장
