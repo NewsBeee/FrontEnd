@@ -113,7 +113,7 @@ export const fetchPromotion = async () => {
 }
 
 // 승급 퀴즈 답안 제출
-export const submitPromotion = async ({ sessiondId, choiceId}) => {
+export const submitPromotion = async ({ sessionId, choiceId}) => {
     const res = await fetch(`${BASE_URL}/newsbee/quizzes/promotion/submit`, {
         method: "POST",
         credentials: "include",
