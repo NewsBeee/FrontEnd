@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function ProtectedRoute({ children }) {
-    const user = localStorage.getItem("user");
-
+    const { user } = useAuth();
+    
     if (!user) {
         return <Navigate to="/intro" replace />;
     }
