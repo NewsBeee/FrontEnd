@@ -55,9 +55,11 @@
     background-color: var(--main-g);
     text-align: center;
     color: var(--text-h);
+    cursor: pointer;
 }
 
 .cancel {
     background-color: #D9D9D9;
     color: #727272;
+    cursor: pointer;
 }

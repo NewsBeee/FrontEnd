@@ -45,6 +45,7 @@
 .to-accountdetail {
     background: none;
     border: none;
+    cursor: pointer;
 }
 
 .account-record {
@@ -117,6 +118,7 @@
     border-radius: 8px;
     background: none;
     padding: 10px;
+    cursor: pointer;
 }
 
 .mypage-voca-container {
@@ -138,8 +140,6 @@
     font-size: 16px;
     font-weight: 550;
 }
-
-.header-chevron {}
 
 .voca-record {
     display: flex;
@@ -219,6 +219,7 @@
     border: none;
     font-size: 16px;
     font-weight: 450;
+    cursor: pointer;
 }
 
 .logout-btn {

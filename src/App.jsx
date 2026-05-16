@@ -18,7 +18,6 @@ import Withdraw from './pages/Withdraw'
 import ProtectedRoute from './components/common/ProtectedRoute'
 import AccountDetail from './pages/AccountDetail'
 import Vocabulary from './pages/Vocabulary'
-
 // import './App.css'
 
 function App() {

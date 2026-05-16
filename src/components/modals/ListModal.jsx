@@ -1,27 +1,30 @@
 import { useEffect, useRef } from 'react';
 import './styles/list-modal.css'
 
-export default function ListModal({ isOpen, onClose, articles = [], loadMore, hasMore, loading, setList }) {
+export default function ListModal({ isOpen, onClose, articles = [], loadMore, hasMore, loading }) {
     const observerRef = useRef(null);
 
     useEffect(() => {
-        if (!isOpen || !hasMore || loading) return;
+        if (!isOpen || !hasMore) return;
 
         const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && hasMore && !loading) {
+            const target = entries[0];
+
+            if (target.isIntersecting && !loading) {
                 loadMore();
             }
-        }, { threshold: 1.0 });
+        }, { threshold: 0.1 });
 
-        // const target = observerRef.current;
-        // observer.observe(target);
-
-        // return () => observer.unobserve(target);
-        if (observerRef.current) {
+        const currentTarget = observerRef.current;
+        if (currentTarget) {
             observer.observe(observerRef.current);
         }
 
-        return () => observer.disconnect();
+        return () => {
+            if (currentTarget) {
+                observer.unobserve(currentTarget);
+            }
+        };
     }, [isOpen, loadMore, hasMore, loading]);
 
     if (!isOpen) return null;
@@ -32,18 +35,29 @@ export default function ListModal({ isOpen, onClose, articles = [], loadMore, ha
                 <p className="list-header">최신순</p>
 
                 <div className='list-container'>
-                    {articles.map(article => (
-                        <div key={article.articleId} className='list-item'>
-                            <a href={article.link} target="_blank" rel="noopener noreferrer">
-                                {article.summary}
-                            </a>
+                    
+                    {articles.length === 0 && !loading ? (
+                        <div className='list-empty'>기사 목록이 없습니다</div>
+                        ): (
+                            articles.map(article => (
+                            <div key={article.articleId} className='list-item'>
+                                <a href={article.link} target="_blank" rel="noopener noreferrer">
+                                    {article.summary}
+                                </a>
+                            </div>
+                        ))
+                    )}
+                    
+                    {loading ? (
+                        <div className='list-loading'>
+                            <div className='dot'></div>
+                            <div className='dot'></div>
+                            <div className='dot'></div>
                         </div>
-                    ))}
-
-                    <div ref={observerRef} style={{ height: "10px", width: "100%" }} />
+                    ) : (
+                        hasMore && <div ref={observerRef} style={{height: "20px", width: "100%"}} />
+                    )}
                 </div>
-
-                {loading && <div>불러오는 중...</div>}
             </div>
         </div>
     )

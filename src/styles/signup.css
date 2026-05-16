@@ -73,6 +73,7 @@
     font-weight: 450;
     border-radius: 8px;
     border: none;
+    cursor: pointer;
 } 
 
 .signup-btn.disabled {
