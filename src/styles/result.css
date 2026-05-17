@@ -111,3 +111,15 @@
     text-align: justify;
     font-size: 15px;
 }
+
+.voca-more-action{
+    text-align: center;
+    margin-top: 5px;
+}
+
+.more-btn {
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+}

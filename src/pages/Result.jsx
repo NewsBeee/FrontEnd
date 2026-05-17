@@ -23,6 +23,9 @@ export default function Result() {
     const [isListOpen, setIsListOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedWord, setSelectedWord] = useState(null);
+
+    const INITIAL_LIMIT = 2;
+    const [limit, setLimit] = useState(INITIAL_LIMIT);
     
     const article = location.state?.article;
     const voca = article?.vocabulary || [];
@@ -81,9 +84,13 @@ export default function Result() {
                         </div>
                     </div>
                     <div className="result-content">
+                        <span className="result-name">기사 요약</span>
+                        <div className="result-summary">{article.summary}</div>                    
+                    </div>
+                    <div className="result-content">
                         <span className="result-name">단어장</span>
                         <div className="result-voca">
-                            {voca.map((vcb, index) => (
+                            {voca.slice(0, limit).map((vcb, index) => (
                                 <div className="voca-item" key={`${vcb.word}-${index}`}>
                                     <button className="voca-word" onClick={() => openWordModal(vcb)}>
                                         {vcb.word}
@@ -94,12 +101,29 @@ export default function Result() {
                                     </button>
                                 </div>
                             ))}
+
+                            {voca.length > INITIAL_LIMIT && (
+                                <div className="voca-more-action">
+                                    {limit < voca.length ? (
+                                        <button 
+                                            className="more-btn" 
+                                            onClick={() => setLimit(voca.length)}
+                                        >
+                                            더보기 (+{voca.length - limit})
+                                        </button>
+                                    ) : (
+                                        <button 
+                                            className="more-btn" 
+                                            onClick={() => setLimit(INITIAL_LIMIT)}
+                                        >
+                                            접기
+                                        </button>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
-                    <div className="result-content">
-                        <span className="result-name">기사 요약</span>
-                        <div className="result-summary">{article.summary}</div>                    
-                    </div>
+                    
                 </div>
             </main>
 
