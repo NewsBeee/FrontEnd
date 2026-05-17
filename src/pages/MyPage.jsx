@@ -7,6 +7,7 @@ import Navigation from "../components/layout/Navigation";
 import logo from "../assets/logo3.png";
 import Error from "../components/common/Error";
 import Loading from "../components/common/Loading";
+import profileImg from "../assets/profile.png";
 import '../styles/mypage.css';
 
 import { useAuth } from "../hooks/useAuth";
@@ -62,7 +63,7 @@ export default function MyPage() {
                     <div className="mypage-account">
                         <div className="account-detail">
                             <div className="profile-img">
-
+                                <img src={profileImg} width={40}/>
                             </div>
                             <div className="profile-detail">
                                 <div className="profile-nickname">{name} 님</div>

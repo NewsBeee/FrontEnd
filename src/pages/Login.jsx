@@ -13,7 +13,7 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const { saveUser } = useAuth();
+    const { setUser } = useAuth();
     const { showToast } = useToast();
 
     async function handleSubmit(e) {
@@ -27,7 +27,7 @@ export default function Login() {
         try {
             const data = await login({ email, password });
 
-            saveUser(data.result);
+            setUser(data.result);
 
             if (!data.result.onboardingCompleted) {
                 showToast("온보딩을 먼저 진행해주세요!", "error");

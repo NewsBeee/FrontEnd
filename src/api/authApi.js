@@ -25,6 +25,27 @@ export async function login({ email, password} ) {
     return data;
 }
 
+// 사용자 로그인 상태 확인
+export async function checkAuth() {
+    const res = await fetch(`${BASE_URL}/newsbee/users/check`, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        const error = new Error(data.message || '인증 오류');
+
+        error.status = res.status;
+        error.code = data.code;
+
+        throw error;
+    }
+
+    return data;
+}
+
 // 로그아웃
 export async function logout() {
     const res = await fetch(`${BASE_URL}/newsbee/auth/logout`, {

@@ -1,33 +1,34 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import { checkAuth } from '../api/authApi';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(() => {
-        const savedUser = sessionStorage.getItem('user');
-        return savedUser ? JSON.parse(savedUser) : null;
-    });
+    const [user, setUser] = useState(null);
+    const [authLoading, setAuthLoading] = useState(true);
 
-    // useEffect(() => {
-    //     const stored = sessionStorage.getItem('user');
+    useEffect(() => {
+        async function initAuth() {
+            try {
+                const data = await checkAuth();
 
-    //     if (stored) {
-    //         setUser(JSON.parse(stored));
-    //     }
-    // }, []);
+                if (data.result?.is_login) {
+                    setUser(data.result);
+                } else {
+                    setUser(null);
+                }
+            } catch (err) {
+                setUser(null);
+            } finally {
+                setAuthLoading(false);
+            }
+        }    
 
-    const saveUser = (userData) => {
-        sessionStorage.setItem('user', JSON.stringify(userData));
-        setUser(userData);
-    };
-
-    const clearUser = () => {
-        sessionStorage.removeItem('user');
-        setUser(null);
-    }
+        initAuth();
+    }, []);
 
     return (
-        <AuthContext.Provider value={{ user, saveUser, clearUser }}>
+        <AuthContext.Provider value={{ user, setUser, authLoading }}>
             {children}
         </AuthContext.Provider>
     );

@@ -41,10 +41,10 @@ export default function Splash() {
                             <img src={PromotionImg} style={{width: "211px"}}/>
                         </div>
                     </main>
-                    </>
+                </>
             ) : (
                 <>
-                    <Header />
+                    <Header left={<img src={Logo} style={{ width: '121px' }}/>} />
                     <main className='main-content'>
                         <div className="splash-wrapper">
                             <div className="splash-welcome">

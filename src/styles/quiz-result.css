@@ -1,15 +1,66 @@
 .qr-wrapper {
-
+    height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
 }
 
 .qr-welcome {
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin: 80px 0 0;
 }
 
-.qr-welcome p {
+.qr-result {
+    font-size: 25px;
+    font-weight: 550;
+    color: var(--text);
+}
 
+.qr-level {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    
+}
+
+.qr-level-prev {
+    color: var(--sub-bg);
+    font-size: 23px;
+    font-weight: 500;
+}
+
+.qr-level-new {
+    color: var(--main-g);
+    font-size: 26px;
+    font-weight: 550;
+}
+
+.qr-arrow {
+    display: flex;
+    align-items: center;
+    color: var(--text);
+}
+
+.qr-message {
+    color: var(--main-g);
+    font-size: 14px;
+    font-weight: 450;
 }
 
 .qr-btn {
-    
+    margin: auto 0 50px;
+    padding: 12px;
+    width: 84%;
+    background-color: #384B3A;
+    color: var(--text-h);
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
 }

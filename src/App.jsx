@@ -47,7 +47,12 @@ function App() {
                 </ProtectedRoute>
               } 
             />
-            <Route path="/challenge/setting" element={<ChalSetting />} />
+            <Route path="/challenge/setting" 
+              element={
+                <ProtectedRoute>
+                  <ChalSetting />
+                </ProtectedRoute>
+              } />
             <Route path="/mypage" 
               element={
                 <ProtectedRoute>
@@ -57,7 +62,12 @@ function App() {
             />
             <Route path="/withdraw" element={<Withdraw />} />
             <Route path="/account-detail" element={<AccountDetail />} />
-            <Route path="/vocabulary" element={<Vocabulary />} />
+            <Route path="/vocabulary" 
+              element={
+                <ProtectedRoute>
+                  <Vocabulary />
+                </ProtectedRoute>
+              } />
           </Routes>
         </BrowserRouter>
       </div>

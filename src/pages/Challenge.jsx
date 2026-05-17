@@ -51,6 +51,8 @@ export default function Challenge() {
     
     const stampCount = Math.min(rawCount, 4);
 
+    const remainWeeks = hasChallenge ? Math.max(0, 4 - Math.min(rawCount, 4)) : 0;
+
     return (
         <>
             <Header left={<img src={logo} style={{ width: '121px' }}/>} />
@@ -120,7 +122,7 @@ export default function Challenge() {
                                 <div className="name">완료한 주</div>
                             </div>
                             <div className="achievement-count">
-                                <div className="count">{articleCount}</div>
+                                <div className="count">{completed}</div>
                                 <div className="name">읽은 기사</div>
                             </div>
                             <div className="achievement-level">
@@ -149,13 +151,17 @@ export default function Challenge() {
                                 </div>
                             ))}
                         </div>
-                        {quizAvailable ? (
+                        {!hasChallenge ? (
+                            <div className="chal-quiz-btn">
+                                목표를 설정하면 퀴즈 도전 가능
+                            </div>
+                        ) : quizAvailable ? (
                             <div className="chal-quiz-btn active">
                                 <Link to='/quiz-intro/promotion' className="chal-btn">승급 퀴즈 도전하기</Link>
                             </div>
                         ):(
                             <div className="chal-quiz-btn">
-                                1주만 더 달성하면 퀴즈 도전 가능
+                                {remainWeeks}주만 더 달성하면 퀴즈 도전 가능 
                             </div>
                         )}
                         

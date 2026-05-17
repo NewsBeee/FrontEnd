@@ -12,7 +12,7 @@ import { useToast } from '../hooks/useToast';
 export default function Nickname() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { saveUser } = useAuth();
+    const { setUser } = useAuth();
     const { showToast } = useToast();
 
     const email = location.state?.email;
@@ -48,7 +48,7 @@ export default function Nickname() {
             console.log("로그인 완료")
 
             if (loginData && loginData.result) {
-                saveUser(loginData.result); 
+                setUser(loginData.result);
             }
 
             navigate('/quiz-intro/onboarding');
