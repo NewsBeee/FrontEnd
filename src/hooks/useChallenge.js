@@ -59,6 +59,11 @@ export function useChallenge() {
             const challenge = await getCurrentChallenge();
             console.log(challenge);
 
+            if (!challenge) {
+                setChallenge(null);
+                return;
+            }
+
             setChallenge(challenge);
 
             if (!challenge?.challengeId || !challenge?.weekStart) {
@@ -80,6 +85,11 @@ export function useChallenge() {
             setHistory(history);
 
         } catch (err) {
+            if (err.status === 404) {
+                setChallenge(null);
+                setError(null);
+                return;
+            }
             console.error(err);
             setError(err);
         } finally {

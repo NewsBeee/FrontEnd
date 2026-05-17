@@ -10,7 +10,6 @@ export async function getCurrentChallenge() {
     const data = await res.json();
 
     if (res.status === 404) {
-        throw new Error(data.message);
         return null;
     }
 
