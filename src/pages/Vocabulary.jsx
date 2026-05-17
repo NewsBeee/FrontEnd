@@ -125,7 +125,7 @@ export default function Vocabulary() {
                             ))
                         )}
 
-                        {loading && <Loading />} 
+                        {loading && <Loading />}
 
                         <div ref={observerRef} style={{ height: "1px" }} />                 
                     </div>
