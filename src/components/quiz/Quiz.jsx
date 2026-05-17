@@ -65,7 +65,7 @@ export default function Quiz({ type, loading, error, sessionId,
                 <div className="quiz-wrapper">
                     <div className="quiz-container">
                         <div className="quiz-number">
-                            {currentQuestion.questionNumber}/{currentQuestion.totalQuestions}
+                            ({currentQuestion.questionNumber}/{currentQuestion.totalQuestions})
                         </div>
                         <div className="quiz-theme">
                             {currentQuestion.type === "fill_blank" && "빈칸 채우기"}

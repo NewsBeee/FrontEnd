@@ -29,17 +29,18 @@
     width: fit-content;
 }
 
-.quiz.meaning {
-    font-size: 15px;
+.quiz.meaning_choice {
+    font-size: 16px;
+    margin: 10px 0 30px 0;
 }
 
-.quiz.blank {
+.quiz.fill_blank {
     padding: 20px 15px;
     border-radius: 8px;
     color: var(--text);
     background-color: var(--main-bg);
     font-size: 15px;
-    margin: 20px 0 30px 0;
+    margin: 0 0 30px 0;
 }
 
 .quiz-answer {

@@ -9,7 +9,8 @@ export async function getCurrentChallenge() {
 
     const data = await res.json();
 
-    if (res.status === 404 && data.code === "CHALLENGE_604") {
+    if (res.status === 404) {
+        throw new Error(data.message);
         return null;
     }
 
@@ -40,8 +41,8 @@ export async function getChallengeProgress(weekStart) {
 
     console.log(data)
 
-    if (res.status === 404 && data.code === "CHALLENGE_604") {
-        console.log("해당 주차의 상세 진행 데이터가 없습니다.");
+    if (res.status === 404) {
+        throw new Error(data.message);
         return null; 
     }
 
@@ -63,13 +64,13 @@ export async function getChallengeHistory() {
         throw new Error("주간 챌린지 달성 이력 조회 실패");
     }
 
-    const { success, result, message} = await res.json();
+    const data = await res.json();
 
-    if (!success) {
-        throw new Error(message);
+    if (!res.ok) {
+        throw new Error(data.message || "주간 챌린지 달성 이력 조회 실패");
     }
 
-    return result;
+    return data.result;
 }
 
 // 주간 목표 설정
@@ -83,15 +84,11 @@ export async function setChallenge({ weekStart, category, goal }) {
         body: JSON.stringify({ weekStart, category, goal }),
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-        throw new Error("주간 목표 설정 실패");
+        throw new Error(data.message || "주간 목표 설정 실패");
     }
 
-    const { success, result, message } = await res.json();
-
-    if (!success) {
-        throw new Error(message);
-    }
-
-    return result;
+    return data.result;
 }

@@ -15,6 +15,7 @@ import { useChallenge } from "../hooks/useChallenge";
 export default function Challenge() {
     const {
         hasChallenge, 
+        category,
         goal, 
         target, 
         completed, 
@@ -38,15 +39,17 @@ export default function Challenge() {
             />
         )
     }
+
+    const remaining = goal - completed;
     
     const percent = goal > 0 ? Math.min((completed / goal) * 100, 100) : 0;
 
     const stamps = [1, 2, 3, 4];
-    const isCompletedThisWeek = completed >= target;
+    const isCompletedThisWeek = hasChallenge && target > 0 &&completed >= target;
 
-    const rawCount = weekCount % 4 + (isCompletedThisWeek ? 1 : 0);
-
-    const stampCount = rawCount > 4 ? 4 : rawCount;
+    const rawCount = hasChallenge ? weekCount % 4 + (isCompletedThisWeek ? 1 : 0) : weekCount % 4;
+    
+    const stampCount = Math.min(rawCount, 4);
 
     return (
         <>
@@ -57,7 +60,7 @@ export default function Challenge() {
                     {!hasChallenge ? (
                         <div className="chal-goal">
                             <div className="chal-goal-text">
-                                <div className="text-header">이번주 목표를 설정하지 않으셨네요!</div>
+                                <div className="text-header">이번 주 목표를 설정하지 않으셨네요!</div>
                                 <div className="text-sub">새로운 목표를 설정하고 승급 챌린지에 도전해보세요!</div>
                             </div>
                             <Link to="/challenge/setting" className="to-chal-setting">
@@ -68,8 +71,8 @@ export default function Challenge() {
                         <div className="chal-goal-current">
                             <div className="goal-current">
                                 <div className="goal-text">
-                                    <div className="goal-header">이번주 챌린지</div>
-                                    <div className="goal-sub">기사 {goal}개 읽기</div>
+                                    <div className="goal-header">이번 주 챌린지</div>
+                                    <div className="goal-sub">{category} 기사 {goal}개 읽기</div>
                                 </div>
                                 <div className="goal-num">{completed}/{goal}</div>
                             </div>
@@ -80,13 +83,20 @@ export default function Challenge() {
                                 />
                             </div>
                             <div className="goal-description">
-                                {goal-completed}개만 더 읽으면 완료!<br/>매주 {resetDay}요일에 기록이 초기화 돼요!
+                                {remaining > 0 ?(
+                                    <>
+                                        {remaining}개만 더 읽으면 완료!<br/>매주 {resetDay}요일에 기록이 초기화 돼요!
+                                    </>
+                                ) : (
+                                    <>이번 주 챌린지 완료!<br/>매주 {resetDay}요일에 기록이 초기화 돼요!</>
+                                )}
+                                
                             </div>
                         </div>
                     )}
                 
                     <div className="chal-tracker">
-                        <p>이번주 읽기 기록</p>
+                        <p>이번 주 읽기 기록</p>
                         <div className="week-wrapper">
                             {Object.keys(readingStatus).map((day) => {
                                 const status = readingStatus[day] || 'none';

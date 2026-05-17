@@ -63,10 +63,6 @@ export default function Home() {
   }, [user]);
 
   async function openListModal() {
-    if (!user) {
-      showToast("로그인 후 목록을 확인할 수 있습니다", "error");
-      return;
-    }
 
     if (isListOpen) {
       setIsListOpen(false);
@@ -75,7 +71,10 @@ export default function Home() {
     
     reset();
     setIsListOpen(true);
-    await loadMore();
+
+    if (user) {
+      await loadMore();
+    }
   }
 
   // 기사 변환 
@@ -83,7 +82,7 @@ export default function Home() {
     e.preventDefault();
 
     if (!link.trim()) {
-      showToast("링크를 입력해주세요", "error");
+      showToast("링크를 입력해주세요!", "error");
       return;
     }
 
@@ -95,10 +94,10 @@ export default function Home() {
         summary_count: summaryCount,
       });
 
-      console.log("변환 응답:", data);
-
       const article = data.result;
       const articleId = article.articleId;
+
+      console.log("변환 결과:", article);
 
       // 기사 읽기 기록 저장 요청
       if (user) {
@@ -115,7 +114,7 @@ export default function Home() {
       console.error(err);
 
       // 비회원 사용 횟수 초과
-      if (err.status === 403 && err.data?.code === "ARTICLE_403") {
+      if (err.status === 403) {
         showToast("비로그인 사용자는 최대 5회까지 변환할 수 있습니다", "error");
         navigate("/intro");
         return;
@@ -143,7 +142,8 @@ export default function Home() {
           loadMore={loadMore}
           hasMore={hasMore}
           loading={loading}
-         />
+          isLoggedIn={!!user}
+        />
 
         <main className='main-content'>
           <div className="home-wrapper">
@@ -186,7 +186,7 @@ export default function Home() {
               <div className='article-list'>
                 {!user ? (
                   <div className='recommend-login'>
-                    <Link to='/intro'>로그인</Link> 후 맞춤 추천 기사를 읽어볼 수 있어요
+                    <Link to='/intro'>로그인</Link> 후 맞춤 추천 기사를 읽을 수 있습니다
                   </div>
                 ) : recommendations.length > 0 ? (
                   recommendations.slice(0, 7).map((article, index) => (

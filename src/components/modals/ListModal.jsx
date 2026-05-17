@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import './styles/list-modal.css'
 
-export default function ListModal({ isOpen, onClose, articles = [], loadMore, hasMore, loading }) {
+export default function ListModal({ isOpen, onClose, articles = [], loadMore, hasMore, loading, isLoggedIn }) {
     const observerRef = useRef(null);
 
     useEffect(() => {
@@ -35,27 +36,32 @@ export default function ListModal({ isOpen, onClose, articles = [], loadMore, ha
                 <p className="list-header">최신순</p>
 
                 <div className='list-container'>
-                    
-                    {articles.length === 0 && !loading ? (
-                        <div className='list-empty'>기사 목록이 없습니다</div>
-                        ): (
-                            articles.map(article => (
+                    {!isLoggedIn ? (
+                        <div className='list-empty'>
+                            <Link to='/intro'>로그인</Link>&nbsp;후 최근 기사 목록을 확인할 수 있습니다
+                        </div>
+                    ) : articles.length === 0 && !loading ? (
+                            <div className='list-empty'>기사 목록이 없습니다</div>
+                    ) : (
+                        articles.map(article => (
                             <div key={article.articleId} className='list-item'>
                                 <a href={article.link} target="_blank" rel="noopener noreferrer">
-                                    {article.summary}
+                                    {article.title}
                                 </a>
                             </div>
                         ))
                     )}
                     
-                    {loading ? (
-                        <div className='list-loading'>
-                            <div className='dot'></div>
-                            <div className='dot'></div>
-                            <div className='dot'></div>
-                        </div>
-                    ) : (
-                        hasMore && <div ref={observerRef} style={{height: "20px", width: "100%"}} />
+                    {isLoggedIn && (
+                        loading ? (
+                            <div className='list-loading'>
+                                <div className='dot'></div>
+                                <div className='dot'></div>
+                                <div className='dot'></div>
+                            </div>
+                        ) : (
+                            hasMore && <div ref={observerRef} style={{height: "20px", width: "100%"}} />
+                        )
                     )}
                 </div>
             </div>

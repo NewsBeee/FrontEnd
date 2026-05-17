@@ -115,7 +115,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 15px;
+    font-size: 14px;
     color: #727272;
     margin-top: 20px;
+}
+
+.list-empty a {
+    color: var(--main-g);
+    font-weight: 500;
 }

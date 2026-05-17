@@ -11,7 +11,8 @@ import logo from "../assets/logo3.png";
 import '../styles/result.css';
 
 import { saveVoca } from "../api/wordApi";
-import { useToast } from '../hooks/useToast'
+import { useToast } from '../hooks/useToast';
+import { useArticles } from '../hooks/useArticles';
 
 const MOCK_ARTICLE_DATA = {
     articleId: 104,
@@ -30,6 +31,7 @@ export default function Result() {
     const location = useLocation();
     const navigate = useNavigate();
     const { showToast } = useToast();
+    const { list, loadMore, hasMore, loading, reset } = useArticles();
     
     const [isListOpen, setIsListOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,6 +39,7 @@ export default function Result() {
     
     const article = location.state?.article || MOCK_ARTICLE_DATA;
     const voca = article?.vocabulary || [];
+    console.log("Result 페이지로 전달된 article 데이터:", article);
 
     if (!article) return <Error goHome={true} />
 
@@ -67,7 +70,14 @@ export default function Result() {
                 left={<img src={logo} style={{ width: '121px' }}/>} 
                 right={<ListButton isOpen={isListOpen} onToggle={() => setIsListOpen(prev => !prev)} />}
             />
-            <ListModal isOpen={isListOpen} onClose={() => setIsListOpen(false)} />
+            <ListModal 
+                isOpen={isListOpen} 
+                onClose={() => setIsListOpen(false)} 
+                articles={list}
+                loadMore={loadMore}
+                hasMore={hasMore}
+                loading={loading}
+            />
 
             <main className="main-content">
                 <div className="result-wrapper">

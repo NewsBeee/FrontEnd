@@ -69,7 +69,6 @@ export function useChallenge() {
                 return
             }
 
-            console.log("3. progress 요청 보낼 weekStart:", challenge.weekStart);
             const progress = await getChallengeProgress(challenge.weekStart);
             console.log("4. getChallengeProgress 결과:", progress);
 
@@ -98,7 +97,7 @@ export function useChallenge() {
 
     return { 
         hasChallenge: !!challenge?.challengeId, 
-        // category: challenge?.category,
+        category: challenge?.category,
         goal: challenge?.goal ?? 0,
         target: progress?.targetArticleCount ?? 0,
         completed: progress?.completedArticleCount ?? 0,
