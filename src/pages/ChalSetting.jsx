@@ -37,9 +37,10 @@ export default function ChalSetting() {
         { label: "정치", value: "정치" },
         { label: "경제", value: "경제" },
         { label: "사회", value: "사회" },
-        { label: "생활/문화", value: "생활/문화" },
+        { label: "문화", value: "문화" },
+        { label: "스포츠", value: "스포츠" },
+        { label: "국제", value: "국제" },
         { label: "IT/과학", value: "IT/과학" },
-        { label: "세계", value: "세계" },
     ]
 
     async function handleSave() {
