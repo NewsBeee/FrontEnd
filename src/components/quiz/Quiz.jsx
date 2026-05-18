@@ -14,7 +14,7 @@ export default function Quiz({ type, loading, error, sessionId,
     selectAnswer, submitAnswer, result, retry 
 }) {
     const navigate = useNavigate();
-    const { user, saveUser } = useAuth();
+    const { user, setUser } = useAuth();
 
     useEffect(() => {
         if (!result) return;
@@ -26,11 +26,11 @@ export default function Quiz({ type, loading, error, sessionId,
         }
         
         if (type === "onboarding") {
-            saveUser({
-                ...user,
+            setUser(prev => ({
+                ...prev,
                 onboardingCompleted: true,
                 level: result.level,
-            })
+            }));
 
             navigate("/splash/onboarding", {
                 state: { type: "onboarding", result }
