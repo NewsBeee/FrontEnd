@@ -27,8 +27,12 @@ export function AuthProvider({ children }) {
         initAuth();
     }, []);
 
+    const logoutUser = () => {
+        setUser(null);
+    }
+
     return (
-        <AuthContext.Provider value={{ user, setUser, authLoading }}>
+        <AuthContext.Provider value={{ user, setUser, authLoading, logoutUser }}>
             {children}
         </AuthContext.Provider>
     );

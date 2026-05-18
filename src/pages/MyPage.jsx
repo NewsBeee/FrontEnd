@@ -30,7 +30,7 @@ export default function MyPage() {
     } = useStats();
 
     const navigate = useNavigate();
-    const { clearUser } = useAuth();
+    const { logoutUser } = useAuth();
     const { showToast } = useToast();
 
     if (loading) return <Loading />;
@@ -48,10 +48,13 @@ export default function MyPage() {
 
         try {
             await logout();
-            navigate('/intro');
+            
         } catch (e) {
             console.error(e);
             showToast("로그아웃에 실패했습니다.", "fail");
+        } finally {
+            logoutUser();
+            navigate('/intro', { replace: true });
         }
     }
 
