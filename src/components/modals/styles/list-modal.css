@@ -1,10 +1,10 @@
 .list-modal {   
     position: fixed;
-    top: 56px;        /* 헤더 높이만큼 */
+    top: 56px;     
     bottom: 74px;     /* 네비게이션 높이만큼 */
     margin: 0 auto;
     width: 100%;
-    max-width: 375px; /* 전체 높이에서 헤더와 네비게이션 높이를 뺀 값 */
+    max-width: 375px;
     background-color: #FDFBF7;
     display: flex;
     justify-content: center;
@@ -17,6 +17,7 @@
     width: 75%;
     height: 80%;
     overflow: hidden;
+    gap: 30px;
 }
 
 .list-header {
@@ -55,20 +56,22 @@
 }
 
 .list-title {
-    display: block;
+    /* display: block; */
+    background: none;
+    border: none;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 15px;
     color: var(--text);
-    text-decoration: none;
+    text-align: left;
     padding: 3px 0;
 }
 
 .list-title:hover {
-    color: var(--main-g);
-    border-bottom: 1px solid var(--main-g);
+    font-weight: 450;
+    border-bottom: 1px solid var(--text);
 }
 
 /* .list-container::-webkit-scrollbar {

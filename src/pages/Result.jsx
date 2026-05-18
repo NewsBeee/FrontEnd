@@ -106,6 +106,7 @@ export default function Result() {
                 loadMore={loadMore}
                 hasMore={hasMore}
                 loading={listLoading}
+                isLoggedIn={!!user}
             />
 
             <main className="main-content">
