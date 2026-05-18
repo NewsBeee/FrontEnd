@@ -28,8 +28,8 @@ export default function Result() {
     const [limit, setLimit] = useState(INITIAL_LIMIT);
     
     const article = location.state?.article;
-    const voca = article?.vocabulary || [];
     console.log("Result 페이지로 전달된 article 데이터:", article);
+    const voca = article?.vocabulary || [];
 
     if (!article) return <Error goHome={true} />
 
@@ -54,11 +54,26 @@ export default function Result() {
         }
     }
 
+    async function openListModal() {
+
+    if (isListOpen) {
+      setIsListOpen(false);
+      return;
+    }
+    
+    reset();
+    setIsListOpen(true);
+
+    if (user) {
+      await loadMore();
+    }
+  }
+
     return (
         <>
             <Header 
                 left={<img src={logo} style={{ width: '121px' }}/>} 
-                right={<ListButton isOpen={isListOpen} onToggle={() => setIsListOpen(prev => !prev)} />}
+                right={<ListButton isOpen={isListOpen} onToggle={openListModal} />}
             />
             <ListModal 
                 isOpen={isListOpen} 

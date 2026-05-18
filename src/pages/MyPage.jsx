@@ -14,6 +14,7 @@ import { useAuth } from "../hooks/useAuth";
 import { logout } from "../api/authApi";
 import { getStats } from "../api/mypageApi";
 import { useStats } from "../hooks/useStats";
+import { useToast } from "../hooks/useToast";
 
 export default function MyPage() {
     const {
@@ -30,6 +31,7 @@ export default function MyPage() {
 
     const navigate = useNavigate();
     const { clearUser } = useAuth();
+    const { showToast } = useToast();
 
     if (loading) return <Loading />;
     if (error) {
@@ -46,11 +48,10 @@ export default function MyPage() {
 
         try {
             await logout();
+            navigate('/intro');
         } catch (e) {
             console.error(e);
-        } finally {
-            clearUser();
-            navigate('/intro');
+            showToast("로그아웃에 실패했습니다.", "fail");
         }
     }
 

@@ -45,13 +45,8 @@ export default function Challenge() {
     const percent = goal > 0 ? Math.min((completed / goal) * 100, 100) : 0;
 
     const stamps = [1, 2, 3, 4];
-    const isCompletedThisWeek = hasChallenge && target > 0 &&completed >= target;
-
-    const rawCount = hasChallenge ? weekCount % 4 + (isCompletedThisWeek ? 1 : 0) : weekCount % 4;
-    
-    const stampCount = Math.min(rawCount, 4);
-
-    const remainWeeks = hasChallenge ? Math.max(0, 4 - Math.min(rawCount, 4)) : 0;
+    const stampCount = Math.min(weekCount, 4);
+    const remainWeeks = Math.max(0, 4 - stampCount);
 
     return (
         <>
