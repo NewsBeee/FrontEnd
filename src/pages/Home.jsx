@@ -99,7 +99,7 @@ export default function Home() {
       // 기사 읽기 기록 저장 요청
       if (user) {
         await recordRead(articleId);
-        console.log("읽기 기록 저장 완료")
+        // console.log("읽기 기록 저장 완료")
       } 
     
       navigate(`/result/${articleId}`, { state: { isNew: true }});

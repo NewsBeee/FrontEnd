@@ -42,10 +42,10 @@ export default function Nickname() {
 
         try {
             await signUp({ email, password, nickname });
-            console.log("회원가입 완료");
+            // console.log("회원가입 완료");
 
             const loginData = await login({email, password});
-            console.log("로그인 완료")
+            // console.log("로그인 완료")
 
             if (loginData && loginData.result) {
                 setUser(loginData.result);

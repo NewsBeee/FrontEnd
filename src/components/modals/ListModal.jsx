@@ -30,6 +30,8 @@ export default function ListModal({ isOpen, onClose, articles = [], loadMore, ha
     }, [isOpen, loadMore, hasMore, loading]);
 
     if (!isOpen) return null;
+
+    const sortedArticles = [...articles].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
     
     return (
         <div className="list-modal" onClick={onClose}>
@@ -47,7 +49,7 @@ export default function ListModal({ isOpen, onClose, articles = [], loadMore, ha
                     ) : articles.length === 0 && !loading ? (
                             <div className='list-empty'>기사 목록이 없습니다</div>
                     ) : (
-                        articles.map(article => (
+                        sortedArticles.map(article => (
                             <div key={article.articleId} className='list-item'>
                                 <button 
                                     type="button"
