@@ -108,6 +108,10 @@
     cursor: default;
 }
 
+.voca-word.disabled:active, .voca-meaning.disabled:active {
+    transform: none;
+}
+
 .result-summary {
     padding: 15px;
     border-radius: 8px;
@@ -124,6 +128,11 @@
 .more-btn {
     background: none;
     border: none;
-    color: var(--text);
+    color: var(--sub-bg);
     cursor: pointer;
+}
+
+.more-btn:hover {
+    color: var(--main-g);
+    font-weight: 450;
 }
