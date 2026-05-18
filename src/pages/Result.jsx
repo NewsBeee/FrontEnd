@@ -1,35 +1,59 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 import Header from "../components/layout/Header";
 import ListButton from "../components/common/ListButton";
 import Navigation from "../components/layout/Navigation";
 import ListModal from "../components/modals/ListModal"; 
 import WordModal from "../components/modals/WordModal";
+import Loading from "../components/common/Loading";
 import Error from "../components/common/Error";
 import logo from "../assets/logo3.png";
 import '../styles/result.css';
 
-import { useAuth } from "../hooks/useAuth";
 import { saveVoca } from "../api/wordApi";
-import { useToast } from '../hooks/useToast';
+import { getArticleDetail } from "../api/articleApi";
+
+import { useAuth } from "../hooks/useAuth";
 import { useArticles } from '../hooks/useArticles';
+import { useToast } from '../hooks/useToast';
 
 export default function Result() {
-    const location = useLocation();
-    const { showToast } = useToast();
+    const { articleId } = useParams();
+
     const { user } = useAuth();
-    const { list, loadMore, hasMore, loading, reset } = useArticles();
+    const { showToast } = useToast();
+    const { list, loadMore, hasMore, loading: listLoading, reset } = useArticles();
     
+    const [article, setArticle] = useState(null);
+    const [articleLoading, setArticleLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [isListOpen, setIsListOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedWord, setSelectedWord] = useState(null);
 
     const INITIAL_LIMIT = 2;
     const [limit, setLimit] = useState(INITIAL_LIMIT);
-    
-    const article = location.state?.article;
+
+    useEffect(() => {
+        async function fetchArticle() {
+            try {
+                const data = await getArticleDetail(articleId);
+                setArticle(data.result);
+            } catch (err) {
+                console.error(err);
+                setError(err);
+            } finally {
+                setArticleLoading(false);
+            }
+        }
+
+        fetchArticle();
+    }, [articleId]);
+
     const voca = article?.vocabulary || [];
+
+    if (articleLoading) return <Loading message="데이터를 불러오는 중입니다..." />;
 
     if (!article) return <Error goHome={true} />
 
@@ -80,7 +104,7 @@ export default function Result() {
                 articles={list}
                 loadMore={loadMore}
                 hasMore={hasMore}
-                loading={loading}
+                loading={listLoading}
             />
 
             <main className="main-content">

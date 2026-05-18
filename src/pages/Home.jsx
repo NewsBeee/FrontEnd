@@ -5,13 +5,13 @@ import logo from '../assets/logo3.png'
 import ListButton from '../components/common/ListButton'
 import Navigation from "../components/layout/Navigation"
 import ListModal from '../components/modals/ListModal'
+import Loading from '../components/common/Loading'
 import '../styles/home.css'
 
 import { convertArticle, getQuota, getRecommendation, recordRead } from '../api/articleApi'
 import { useAuth } from '../hooks/useAuth'
 import { useArticles } from '../hooks/useArticles'
 import { useToast } from '../hooks/useToast'
-import Loading from '../components/common/Loading'
 
 export default function Home() {
   const [isListOpen, setIsListOpen] = useState(false);
@@ -97,17 +97,13 @@ export default function Home() {
       const article = data.result;
       const articleId = article.articleId;
 
-      console.log("변환 결과:", article);
-
       // 기사 읽기 기록 저장 요청
       if (user) {
         await recordRead(articleId);
         console.log("읽기 기록 저장 완료")
       } 
     
-      navigate("/result", {
-        state: { article },
-      });
+      navigate(`/result/${articleId}`);
 
       setLink('');
     } catch (err) {

@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import './styles/list-modal.css'
+import { Link, useNavigate } from 'react-router-dom';
+import './styles/list-modal.css';
 
 export default function ListModal({ isOpen, onClose, articles = [], loadMore, hasMore, loading, isLoggedIn }) {
     const observerRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!isOpen || !hasMore) return;
@@ -48,9 +49,16 @@ export default function ListModal({ isOpen, onClose, articles = [], loadMore, ha
                     ) : (
                         articles.map(article => (
                             <div key={article.articleId} className='list-item'>
-                                <a href={article.link} target="_blank" rel="noopener noreferrer">
+                                <button 
+                                    type="button"
+                                    className='list-title'
+                                    onClick={() => {
+                                        onClose();
+                                        navigate(`/result/${article.articleId}`)
+                                    }}
+                                >
                                     {article.title}
-                                </a>
+                                </button>
                             </div>
                         ))
                     )}

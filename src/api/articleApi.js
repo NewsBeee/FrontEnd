@@ -42,6 +42,22 @@ export async function recordRead(articleId) {
     return data;
 }
 
+// 기사 상세 조회
+export async function getArticleDetail(articleId) {
+    const res = await fetch(`${BASE_URL}/newsbee/articles/${articleId}`, {
+        method: 'GET',
+        credentials: 'include',
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        throw new Error(data.message || '기사 상세 조회 실패');
+    }
+ 
+    return data.result;
+}
+
 // 추천 기사
 export async function getRecommendation(level) {    
     const queryPath = level ? `?level=${level}` : '';

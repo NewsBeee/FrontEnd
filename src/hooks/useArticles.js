@@ -29,9 +29,6 @@ export function useArticles() {
         try {
             const newList = await getArticles(pageRef.current, size);
 
-            console.log("현재 page:", pageRef.current);
-            console.log("받아온 데이터:", newList);
-
             if (!newList || newList.length === 0) {
                 setHasMore(false);
                 hasMoreRef.current = false;
