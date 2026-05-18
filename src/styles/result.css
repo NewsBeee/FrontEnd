@@ -128,11 +128,6 @@
 .more-btn {
     background: none;
     border: none;
-    color: var(--sub-bg);
-    cursor: pointer;
-}
-
-.more-btn:hover {
     color: var(--main-g);
-    font-weight: 450;
+    cursor: pointer;
 }
