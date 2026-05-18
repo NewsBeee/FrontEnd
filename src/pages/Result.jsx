@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 import Header from "../components/layout/Header";
 import ListButton from "../components/common/ListButton";
@@ -10,14 +10,15 @@ import Error from "../components/common/Error";
 import logo from "../assets/logo3.png";
 import '../styles/result.css';
 
+import { useAuth } from "../hooks/useAuth";
 import { saveVoca } from "../api/wordApi";
 import { useToast } from '../hooks/useToast';
 import { useArticles } from '../hooks/useArticles';
 
 export default function Result() {
     const location = useLocation();
-    const navigate = useNavigate();
     const { showToast } = useToast();
+    const { user } = useAuth();
     const { list, loadMore, hasMore, loading, reset } = useArticles();
     
     const [isListOpen, setIsListOpen] = useState(false);
@@ -28,7 +29,6 @@ export default function Result() {
     const [limit, setLimit] = useState(INITIAL_LIMIT);
     
     const article = location.state?.article;
-    console.log("Result 페이지로 전달된 article 데이터:", article);
     const voca = article?.vocabulary || [];
 
     if (!article) return <Error goHome={true} />
@@ -55,19 +55,18 @@ export default function Result() {
     }
 
     async function openListModal() {
+        if (isListOpen) {
+            setIsListOpen(false);
+            return;
+        }
+        
+        reset();
+        setIsListOpen(true);
 
-    if (isListOpen) {
-      setIsListOpen(false);
-      return;
+        if (user) {
+            await loadMore();
+        }
     }
-    
-    reset();
-    setIsListOpen(true);
-
-    if (user) {
-      await loadMore();
-    }
-  }
 
     return (
         <>
