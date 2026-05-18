@@ -26,12 +26,6 @@ export default function Quiz({ type, loading, error, sessionId,
         }
         
         if (type === "onboarding") {
-            setUser(prev => ({
-                ...prev,
-                onboardingCompleted: true,
-                level: result.level,
-            }));
-
             navigate("/splash/onboarding", {
                 state: { type: "onboarding", result }
             });

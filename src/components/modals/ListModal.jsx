@@ -33,7 +33,10 @@ export default function ListModal({ isOpen, onClose, articles = [], loadMore, ha
     return (
         <div className="list-modal" onClick={onClose}>
             <div className="list-content" onClick={(e) => e.stopPropagation()}>
-                <p className="list-header">최신순</p>
+                <div className="list-header">
+                    <div className='list-header-left'>읽은 기사 목록</div>
+                    <div className='list-header-right'>최신순</div>
+                </div>
 
                 <div className='list-container'>
                     {!isLoggedIn ? (

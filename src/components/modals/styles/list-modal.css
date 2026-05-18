@@ -19,11 +19,22 @@
     overflow: hidden;
 }
 
-.list-content p {
+.list-header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.list-header-left {
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    user-select: none;
+}
+
+.list-header-right {
     color: #727272;
-    font-size: 13px;
+    font-size: 12px;
     user-select: none;
 }
 

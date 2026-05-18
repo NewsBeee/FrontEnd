@@ -12,7 +12,7 @@ import { useToast } from '../hooks/useToast'
 export default function Withdraw() {
     const navigate = useNavigate(); 
     const [loading, setLoading] = useState(false);
-    const { clearUser } = useAuth();
+    const { logoutUser } = useAuth();
     const { showToast } = useToast();
     
     async function handleDelete() {
@@ -23,10 +23,10 @@ export default function Withdraw() {
 
             await deleteAccount();
 
-            clearUser();
+            logoutUser();
 
             showToast('회원 탈퇴가 정상적으로 처리되었습니다.', 'success');
-            navigate('/intro');
+            navigate('/intro', { replace: true });
         } catch (error) {
             console.error(error);
             showToast(error.message, 'fail');
