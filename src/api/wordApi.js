@@ -7,6 +7,7 @@ export async function saveVoca({ articleId, word, meaning}) {
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
             articleId,
             word,
