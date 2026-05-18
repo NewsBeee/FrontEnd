@@ -104,6 +104,10 @@
     transform: scale(0.98);
 }
 
+.voca-word.disabled, .voca-meaning.disabled {
+    cursor: default;
+}
+
 .result-summary {
     padding: 15px;
     border-radius: 8px;

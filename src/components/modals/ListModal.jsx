@@ -54,7 +54,9 @@ export default function ListModal({ isOpen, onClose, articles = [], loadMore, ha
                                     className='list-title'
                                     onClick={() => {
                                         onClose();
-                                        navigate(`/result/${article.articleId}`);
+                                        navigate(`/result/${article.articleId}`, {
+                                            state: { isNew: false }
+                                        });
                                     }}
                                 >
                                     {article.title}

@@ -63,7 +63,6 @@ export default function Home() {
   }, [user]);
 
   async function openListModal() {
-
     if (isListOpen) {
       setIsListOpen(false);
       return;
@@ -103,7 +102,7 @@ export default function Home() {
         console.log("읽기 기록 저장 완료")
       } 
     
-      navigate(`/result/${articleId}`);
+      navigate(`/result/${articleId}`, { state: { isNew: true }});
 
       setLink('');
     } catch (err) {
@@ -158,12 +157,13 @@ export default function Home() {
               </div> 
             </div>
 
-            <form className='home-input' onSubmit={handleSubmit}>
+            <form className='home-input' onSubmit={handleSubmit} name="article-convert-form">
               <input 
                 type="url" 
                 placeholder='기사 링크를 입력해주세요...' 
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
+                name="article-link"
               />
               <div className='summary-options'>
                 <span>기사 요약</span>

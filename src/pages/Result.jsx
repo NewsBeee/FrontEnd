@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 import Header from "../components/layout/Header";
 import ListButton from "../components/common/ListButton";
@@ -20,6 +20,9 @@ import { useToast } from '../hooks/useToast';
 
 export default function Result() {
     const { articleId } = useParams();
+    const location = useLocation();
+
+    const isNew = location.state?.isNew ?? false;
 
     const { user } = useAuth();
     const { showToast } = useToast();
@@ -132,11 +135,17 @@ export default function Result() {
                         <div className="result-voca">
                             {voca.slice(0, limit).map((vcb, index) => (
                                 <div className="voca-item" key={`${vcb.word}-${index}`}>
-                                    <button className="voca-word" onClick={() => openWordModal(vcb)}>
+                                    <button 
+                                        className={`voca-word ${!isNew ? 'disabled' : ''}`}
+                                        onClick={() => isNew && openWordModal(vcb)}
+                                    >
                                         {vcb.word}
                                     </button>
                                     <FaArrowRight />
-                                    <button className="voca-meaning" onClick={() => openWordModal(vcb)}>
+                                    <button 
+                                        className={`voca-meaning ${!isNew ? 'disabled' : ''}`}
+                                        onClick={() => isNew && openWordModal(vcb)}
+                                    >
                                         {vcb.meaning}
                                     </button>
                                 </div>
