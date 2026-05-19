@@ -131,3 +131,9 @@
     color: var(--main-g);
     cursor: pointer;
 }
+
+.empty-voca {
+    text-align: center;
+    color: var(--sub-bg);
+    font-size: 14px;
+}

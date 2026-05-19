@@ -150,42 +150,49 @@ export default function Result() {
                     <div className="result-content">
                         <span className="result-name">단어장</span>
                         <div className="result-voca">
-                            {voca.slice(0, limit).map((vcb, index) => (
-                                <div className="voca-item" key={`${vcb.word}-${index}`}>
-                                    <button 
-                                        className={`voca-word ${!isNew ? 'disabled' : ''}`}
-                                        onClick={() => isNew && openWordModal(vcb)}
-                                    >
-                                        {vcb.word}
-                                    </button>
-                                    <FaArrowRight />
-                                    <button 
-                                        className={`voca-meaning ${!isNew ? 'disabled' : ''}`}
-                                        onClick={() => isNew && openWordModal(vcb)}
-                                    >
-                                        {vcb.meaning}
-                                    </button>
-                                </div>
-                            ))}
+                            
+                            {!isNew && voca.length === 0 ? (
+                                <div className="empty-voca">저장한 단어가 없습니다</div>
+                            ) : (
+                                <>
+                                    {voca.slice(0, limit).map((vcb, index) => (
+                                        <div className="voca-item" key={`${vcb.word}-${index}`}>
+                                            <button 
+                                                className={`voca-word ${!isNew ? 'disabled' : ''}`}
+                                                onClick={() => isNew && openWordModal(vcb)}
+                                            >
+                                                {vcb.word}
+                                            </button>
+                                            <FaArrowRight />
+                                            <button 
+                                                className={`voca-meaning ${!isNew ? 'disabled' : ''}`}
+                                                onClick={() => isNew && openWordModal(vcb)}
+                                            >
+                                                {vcb.meaning}
+                                            </button>
+                                        </div>
+                                    ))}
 
-                            {voca.length > INITIAL_LIMIT && (
-                                <div className="voca-more-action">
-                                    {limit < voca.length ? (
-                                        <button 
-                                            className="more-btn" 
-                                            onClick={() => setLimit(voca.length)}
-                                        >
-                                            더보기 (+{voca.length - limit})
-                                        </button>
-                                    ) : (
-                                        <button 
-                                            className="more-btn" 
-                                            onClick={() => setLimit(INITIAL_LIMIT)}
-                                        >
-                                            접기
-                                        </button>
+                                    {voca.length > INITIAL_LIMIT && (
+                                        <div className="voca-more-action">
+                                            {limit < voca.length ? (
+                                                <button 
+                                                    className="more-btn" 
+                                                    onClick={() => setLimit(voca.length)}
+                                                >
+                                                    더보기 (+{voca.length - limit})
+                                                </button>
+                                            ) : (
+                                                <button 
+                                                    className="more-btn" 
+                                                    onClick={() => setLimit(INITIAL_LIMIT)}
+                                                >
+                                                    접기
+                                                </button>
+                                            )}
+                                        </div>
                                     )}
-                                </div>
+                                </>
                             )}
                         </div>
                     </div>
