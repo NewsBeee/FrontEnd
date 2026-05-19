@@ -17,7 +17,7 @@ export function usePromotion() {
 
             const data = await fetchPromotion();
 
-            console.log("승급 퀴즈 응답:", data);
+            // console.log("승급 퀴즈 응답:", data);
 
             setSessionId(data.sessionId);
             setCurrentQuestion(data.question);

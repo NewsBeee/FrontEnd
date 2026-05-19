@@ -17,7 +17,7 @@ export function useOnboarding() {
 
             const data = await fetchOnboarding();
 
-            console.log("온보딩 응답:", data);
+            // console.log("온보딩 응답:", data);
 
             setSessionId(data.sessionId);
             setCurrentQuestion(data.question);
