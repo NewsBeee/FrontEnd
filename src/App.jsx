@@ -39,7 +39,8 @@ function App() {
             <Route path="/promotion" element={<Promotion />}/>
             <Route path="/splash/:type" element={<Splash />} />
             <Route path="/promotion/result" element={<QuizResult />} />
-            <Route path="/result/:articleId" element={<Result />} />
+            <Route path="/result" element={<Result />} />
+            <Route path="/articles/:articleId" element={<Result />} />
             <Route path="/challenge" 
               element={
                 <ProtectedRoute>

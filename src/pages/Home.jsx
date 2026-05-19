@@ -102,7 +102,7 @@ export default function Home() {
         // console.log("읽기 기록 저장 완료")
       } 
     
-      navigate(`/result/${articleId}`, { state: { isNew: true }});
+      navigate(`/result`, { state: { isNew: true, article } });
 
       setLink('');
     } catch (err) {

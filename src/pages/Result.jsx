@@ -23,13 +23,14 @@ export default function Result() {
     const location = useLocation();
 
     const isNew = location.state?.isNew ?? false;
+    const articleState = location.state?.article;
 
     const { user } = useAuth();
     const { showToast } = useToast();
     const { list, loadMore, hasMore, loading: listLoading, reset } = useArticles();
     
-    const [article, setArticle] = useState(null);
-    const [articleLoading, setArticleLoading] = useState(true);
+    const [article, setArticle] = useState(articleState || null);
+    const [articleLoading, setArticleLoading] = useState(!articleState);
     const [error, setError] = useState(null);
     const [isListOpen, setIsListOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,6 +40,22 @@ export default function Result() {
     const [limit, setLimit] = useState(INITIAL_LIMIT);
 
     useEffect(() => {
+        if (articleState) {
+            setArticle(articleState);
+            setArticleLoading(false);
+            return;
+        }
+
+        if (isNew) {
+            setArticleLoading(false);
+            return;
+        }
+
+        if (!articleId) {
+            setArticleLoading(false);
+            return;
+        }
+
         async function fetchArticle() {
             try {
                 const data = await getArticleDetail(articleId);
@@ -53,7 +70,7 @@ export default function Result() {
         }
 
         fetchArticle();
-    }, [articleId]);
+    }, [articleId, isNew, articleState]);
 
     const voca = article?.vocabulary || [];
 
