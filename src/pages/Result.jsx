@@ -151,7 +151,7 @@ export default function Result() {
                         <span className="result-name">단어장</span>
                         <div className="result-voca">
                             
-                            {!isNew && voca.length === 0 ? (
+                            {voca.length === 0 ? (
                                 <div className="empty-voca">저장한 단어가 없습니다</div>
                             ) : (
                                 <>
