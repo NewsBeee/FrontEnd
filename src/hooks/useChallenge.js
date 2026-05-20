@@ -68,19 +68,19 @@ export function useChallenge() {
 
             if (!challenge?.challengeId || !challenge?.weekStart) {
                 const history = await getChallengeHistory();
-                console.log("2. getChallengeHistory(챌린지없음) 결과:", history);
+                // console.log("챌린지 없을 때 Data:", history);
 
                 setHistory(history);
                 return
             }
 
             const progress = await getChallengeProgress(challenge.weekStart);
-            console.log("4. getChallengeProgress 결과:", progress);
+            // console.log("챌린지 진행 상황:", progress);
 
             setProgress(progress);
 
             const history = await getChallengeHistory();
-            console.log("5. getChallengeHistory(챌린지있음) 결과:", history);
+            // console.log("챌린지 있을 때 Data:", history);
 
             setHistory(history);
 
@@ -112,6 +112,7 @@ export function useChallenge() {
         target: progress?.targetArticleCount ?? 0,
         completed: progress?.completedArticleCount ?? 0,
         quizAvailable: progress?.promotionQuizAvailable ?? false, 
+        stampCount: progress?.promotionStampCount ?? 0,
         weekCount: history?.completedWeekCount ?? 0,
         articleCount: history?.readArticleCount ?? 0,
         level: history?.level ?? 0,

@@ -20,6 +20,7 @@ export default function Challenge() {
         target, 
         completed, 
         quizAvailable, 
+        stampCount,
         weekCount,
         articleCount,
         level,
@@ -45,8 +46,7 @@ export default function Challenge() {
     const percent = goal > 0 ? Math.min((completed / goal) * 100, 100) : 0;
 
     const stamps = [1, 2, 3, 4];
-    const stampCount = Math.min(weekCount, 4);
-    const remainWeeks = Math.max(0, 4 - stampCount);
+    const remainWeeks = Math.max(4 - stampCount, 0);
 
     return (
         <>
