@@ -66,7 +66,7 @@ export function useChallenge() {
 
             setChallenge(challenge);
 
-            if (!challenge?.challengeId || !challenge?.weekStart) {
+            if (!challenge?.weekStart) {
                 const history = await getChallengeHistory();
                 // console.log("챌린지 없을 때 Data:", history);
 
