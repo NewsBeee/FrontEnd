@@ -18,7 +18,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useArticles } from '../hooks/useArticles';
 import { useToast } from '../hooks/useToast';
 
-export default function Result() {
+export default function Result() { 
     const { articleId } = useParams();
     const location = useLocation();
 
@@ -78,6 +78,27 @@ export default function Result() {
 
     if (!article) return <Error goHome={true} />
 
+    function renderConvertArticle(text, replacementMap = []) {
+        const words = Array.isArray(replacementMap)
+            ? replacementMap
+            : Object.values(replacementMap);
+
+        if (!text || words.length === 0) return text;
+
+        const escapedWords = words.map(word => word.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+
+        const regex = new RegExp(`(${escapedWords.join('|')})`, 'g');
+
+        return text.split(regex).map((part, index) => words.includes(part) ? (
+            <span key={index} className="highlighted-word">
+                {part}
+            </span>
+        ) : (
+            part
+        ));
+    }
+
+
     function openWordModal(vcb) {
         setSelectedWord(vcb);
         setIsModalOpen(true);
@@ -134,7 +155,7 @@ export default function Result() {
                     <div className="result-content">
                         <span className="result-name">변환된 기사</span>
                         <div className="result-article">
-                            {article.convertArticle}
+                            <p className="article-text">{renderConvertArticle(article.convertArticle, article.replacement_map)}</p>
                             <div className="article-source">
                                 <span>기사 원문:</span>
                                 <a href={article.link} target="_blank" rel="noopener noreferrer" title={article.link}>
