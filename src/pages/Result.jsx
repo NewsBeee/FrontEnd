@@ -78,10 +78,15 @@ export default function Result() {
 
     if (!article) return <Error goHome={true} />
 
+    // 변환 단어 강조
     function renderConvertArticle(text, replacementMap = []) {
-        const words = Array.isArray(replacementMap)
+        const items = Array.isArray(replacementMap)
             ? replacementMap
             : Object.values(replacementMap);
+
+        const words = items.map(item =>
+            typeof item === 'object' && item !== null ? item.word : item
+        ).filter(Boolean);
 
         if (!text || words.length === 0) return text;
 
@@ -89,15 +94,13 @@ export default function Result() {
 
         const regex = new RegExp(`(${escapedWords.join('|')})`, 'g');
 
-        return text.split(regex).map((part, index) => words.includes(part) ? (
-            <span key={index} className="highlighted-word">
-                {part}
-            </span>
+        return text.split(regex).map((part, index) => 
+            words.includes(part) ? (
+            <span key={index} className="highlighted-word">{part}</span>
         ) : (
             part
         ));
     }
-
 
     function openWordModal(vcb) {
         setSelectedWord(vcb);
