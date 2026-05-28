@@ -59,7 +59,7 @@ export default function Result() {
         async function fetchArticle() {
             try {
                 const data = await getArticleDetail(articleId);
-                // console.log("기사 상세 정보:", data);
+                console.log("기사 상세 정보:", data);
                 setArticle(data);
             } catch (err) {
                 console.error(err);
