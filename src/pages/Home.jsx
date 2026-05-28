@@ -95,7 +95,6 @@ export default function Home() {
 
       const article = data.result;
       const articleId = article.articleId;
-      console.log("상세 데이터:", article);
 
       // 기사 읽기 기록 저장 요청
       if (user) {
