@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { fetchOnboarding, submitOnboarding } from "../api/quizApi";
+import { useToast } from "./useToast";
 
 export function useOnboarding() {
     const [sessionId, setSessionId] = useState(null);
     const [currentQuestion, setCurrentQuestion] = useState(null);
     const [selectedChoiceId, setSelectedChoiceId] = useState(null);
     const [result, setResult] = useState(null);
-
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const { showToast } = useToast();
 
     const loadOnboarding = async () => {
         try {
@@ -40,7 +42,7 @@ export function useOnboarding() {
 
     const submitAnswer = async () => {
         if (selectedChoiceId === null) {
-            alert("답안을 선택해주세요.");
+            showToast("답안을 선택해주세요.", "error");
             return;
         }
 

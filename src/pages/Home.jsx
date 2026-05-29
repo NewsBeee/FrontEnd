@@ -115,7 +115,7 @@ export default function Home() {
         return;
       } 
 
-      alert(err.message);
+      showToast("기사 변환을 다시 시도해주세요", "error");
     } finally {
       setConvertLoading(false);
     }

@@ -27,7 +27,7 @@ export default function Nickname() {
         e.preventDefault();
 
         if (!email || !password) {
-            alert("회원가입 정보가 없습니다. 처음부터 다시 진행해주세요.");
+            showToast("회원가입 정보가 없습니다. 처음부터 다시 진행해주세요.", "error");
             navigate("/signup");
             return;
         }
