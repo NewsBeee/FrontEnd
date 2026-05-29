@@ -138,16 +138,6 @@
     font-size: 12px;
 }
 
-.highlighted-word {
-    display: inline;
-    font-weight: 550;
-    background-color: #ffe17db4; /*#fff3a3;*/
-    border-radius: 4px;
-    padding: 0 2px;
-}
-
-.article-text {
+.result-article > p {
     margin: 0;
-    text-align: justify;
-    line-height: 1.5;
 }
