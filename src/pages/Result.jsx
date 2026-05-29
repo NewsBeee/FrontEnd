@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
+import ReactMarkdown from "react-markdown";
 import Header from "../components/layout/Header";
 import ListButton from "../components/common/ListButton";
 import Navigation from "../components/layout/Navigation";
@@ -78,30 +79,6 @@ export default function Result() {
 
     if (!article) return <Error goHome={true} />
 
-    // 변환 단어 강조
-    // function renderConvertArticle(text, replacementMap = []) {
-    //     const items = Array.isArray(replacementMap)
-    //         ? replacementMap
-    //         : Object.values(replacementMap);
-
-    //     const words = items.map(item =>
-    //         typeof item === 'object' && item !== null ? item.word : item
-    //     ).filter(Boolean);
-
-    //     if (!text || words.length === 0) return text;
-
-    //     const escapedWords = words.map(word => word.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
-
-    //     const regex = new RegExp(`(${escapedWords.join('|')})`, 'g');
-
-    //     return text.split(regex).map((part, index) => 
-    //         words.includes(part) ? (
-    //         <span key={index} className="highlighted-word">{part}</span>
-    //     ) : (
-    //         part
-    //     ));
-    // }
-
     function openWordModal(vcb) {
         setSelectedWord(vcb);
         setIsModalOpen(true);
@@ -158,8 +135,7 @@ export default function Result() {
                     <div className="result-content">
                         <span className="result-name">변환된 기사</span>
                         <div className="result-article">
-                            {/* <p className="article-text">{renderConvertArticle(article.convertArticle, article.replacement_map)}</p> */}
-                            {article.convertArticle}
+                            <ReactMarkdown>{article.convertArticle}</ReactMarkdown>
                             <div className="article-source">
                                 <span>기사 원문:</span>
                                 <a href={article.link} target="_blank" rel="noopener noreferrer" title={article.link}>
